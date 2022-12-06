@@ -52,7 +52,7 @@
                         </li> -->
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page"
-                            href="../html/home.php">購物車 <span
+                            href="../html/shopping_cart.html">購物車 <span
                                 class="badge bg-secondary">0</span></a>
                     </li>
                     <li class="nav-item">
@@ -65,7 +65,7 @@
                         </a>
                         <ul style="line-height: 30px;" class="dropdown-menu">
                             <li><a class="dropdown-item" href="#">追蹤清單</a></li>
-                            <li><a class="dropdown-item" href="#">訂單</a></li>
+                            <li><a class="dropdown-item" href="../html/order.html">訂單</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -171,15 +171,15 @@
                     <?php
                             require_once("dbtools.inc.php");
 	
-                            //指定每頁顯示幾筆記錄
-                              $records_per_page = 1;
+                            //指定顯示幾筆資料
+                            $records_per_page = 5;
                         
                             $link=create_connection();
                         
                         
                             $sql="call sales_ranking";
                             $result=execute_sql("shoppingdb", $sql, $link);
-                            // $total = mysql_num_rows($result);
+                            
 
                             //取得欄位數
                             $total_fields = mysql_num_fields($result);
@@ -188,16 +188,17 @@
                             $j = 1;
                             while ($row = mysql_fetch_row($result) and $j <= $records_per_page)
                             {
-                                echo "<div class=\"card\" style=\"width: 12rem; margin: 20px;\">";      
+                                echo "<div class=\"card\" style=\"width: 12rem; margin: 20px;\">";
+                                // echo "<a class=\"navbar-brand\" href=\"#\">";      
                                 for($i = 0; $i < $total_fields; $i+=3)
                                     echo "<img src=\"" . $row[$i] . " \" class=\"card-img-top\" alt=\"...\">
                                     <div class=\"card-body\">
-                                        <h5 class=\"card-title\">" . $row[$i+1] . "</h5>
-                                        <h5 class=\"card-title\">" . $row[$i+2] . "</h5>
+                                        <h5 class=\"card-title;\">" . $row[$i+1] . "</h5>
+                                        <h5 class=\"card-title text-danger\">" . $row[$i+2] . "</h5>
                                         <a href=\"#\" class=\"btn btn-primary\">加入購物車</a>
                                     </div>";
                                 $j++;
-                                echo "</div>";     
+                                echo "</div>";
                             }
                         ?>
 
@@ -207,7 +208,7 @@
                             <img src="../images/t1.jpg" class="card-img-top" alt="...">
                             <div class="card-body">
                                 <h5 class="card-title">Card title</h5>
-                                <h5 class="card-title">500</h5>
+                                <h5 class="card-title text-danger">500</h5>
                                 <a href="#" class="btn btn-primary">加入購物車</a>
                             </div>
                         </div>
@@ -224,7 +225,7 @@
                                 20px;">
                             <img src="../images/t2.jpg" class="card-img-top" alt="...">
                             <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
+                                <div style="width: 100pt; border: 1pt solid red;"><h5 class="card-title">Card title</h5></div>
                                 <h5 class="card-title">33,000</h5>
                                 <a href="#" class="btn btn-primary">加入購物車</a>
                             </div>
