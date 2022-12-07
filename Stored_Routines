@@ -1,0 +1,20 @@
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sales_ranking`()
+BEGIN
+SELECT pID,pImage,pName,pPrice FROM products ORDER BY pSales_volume DESC;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `search`(IN `input` VARCHAR(20))
+BEGIN
+
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `browse_products`(IN `input` VARCHAR(20))
+BEGIN
+SELECT pImage,pName,pIntroduce,pPrice,pQuantity FROM products WHERE pID = input;
+END$$
+DELIMITER ;

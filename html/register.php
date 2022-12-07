@@ -13,13 +13,13 @@
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" type="text/css" href="/css/home.css">
+    <link rel="stylesheet" type="text/css" href="../css/home.css">
 </head>
 
 <body>
     <nav class="navbar navbar-dark navbar-expand-lg">
         <div class="container">
-            <a style="font-size: 20pt" class="navbar-brand" href="/html/home.html">
+            <a style="font-size: 20pt" class="navbar-brand" href="../html/home.php">
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                     class="bi bi-cart-fill" viewBox="0 0 16 16">
                     <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1
@@ -46,10 +46,10 @@
 
                 <ul class="navbar-nav align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/html/home.html">最近看過</a>
+                        <a class="nav-link active" aria-current="page" href="../html/home.php">最近看過</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/html/home.html">購物車 <span class="badge
+                        <a class="nav-link active" aria-current="page" href="../html/shopping_cart.html">購物車 <span class="badge
                                     bg-secondary">0</span></a>
                     </li>
                     <li class="nav-item">
@@ -74,7 +74,7 @@
                         <a class="nav-link active" href="#">button</a>
                     </li> -->
                     <li class="nav-item">
-                        <a class="nav-link" href="/html/login.html"><button type="button"
+                        <a class="nav-link" href="../html/login.html"><button type="button"
                                 class="btn btn-success">登入</button></a>
                     </li>
                 </ul>
@@ -119,64 +119,54 @@
 
     <div style="margin-top: 30pt;" class="container">
         <div class="row justify-content-md-center">
-            <!-- <div style="border: 1pt solid red;" class="col-3">
-                <div class="list-group">
-                    
-                    <a href="#" class="list-group-item list-group-item-action list-group-item-primary text-center">3C</a>
-                    <a href="#" class="list-group-item list-group-item-action list-group-item-primary text-center">美妝</a>
-                    <a href="#" class="list-group-item list-group-item-action list-group-item-primary text-center">生活用品</a>
-                    <a href="#" class="list-group-item list-group-item-action list-group-item-primary text-center">item</a>
-                    <a href="#" class="list-group-item list-group-item-action list-group-item-primary text-center">item</a>
-                    <a href="#" class="list-group-item list-group-item-action list-group-item-primary text-center">item</a>
-                    <a href="#" class="list-group-item list-group-item-action list-group-item-primary text-center">item</a>
-                    <a href="#" class="list-group-item list-group-item-action list-group-item-primary text-center">item</a>
-                    <a href="#" class="list-group-item list-group-item-action list-group-item-primary text-center">item</a>
-                    <a href="#" class="list-group-item list-group-item-action list-group-item-primary text-center">item</a>
-                    
-                </div>
-            </div> -->
-            <div style="border: 1pt solid red;" class="col">
-                <img style="width: 300px;" src="/images/t1.jpg" class="rounded mx-auto d-block" alt="...">
-            </div>
-            <div style="border: 1pt solid red;" class="col">
-                <h1 style="word-wrap:break-word">Title</h1>
-                <br>
-                <p style="word-wrap:break-word; width: 300pt;">
-                    *******content***************************************************************************************************************
-                </p>
-                <h3 class="text-danger">500</h3>
-                <br>
-                <div class="row">
-                    <div style="border: 1pt solid red;" class="col-auto">
-                        <select class="form-select" aria-label="Default select example">
-                            <!-- <option selected>1</option> -->
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="3">4</option>
-                            <option value="3">5</option>
-                            <option value="3">6</option>
-                            <option value="3">7</option>
-                            <option value="3">8</option>
-                            <option value="3">9</option>
-                            <option value="3">10</option>
-                            <option value="3">11</option>
-                            <option value="3">12</option>
-                            <option value="3">13</option>
-                            <option value="3">14</option>
-                            <option value="3">15</option>
-                            <option value="3">16</option>
-                            <option value="3">17</option>
-                            <option value="3">18</option>
-                            <option value="3">19</option>
-                            <option value="3">20</option>
-                        </select>
+            <?php
+            if(!empty($_GET["num"]))
+            {
+                $ID = $_GET["num"];
+
+                require_once("dbtools.inc.php");
+	
+                //指定顯示幾筆資料
+                $records_per_page = 1;
+                        
+                $link=create_connection();
+                        
+                        
+                $sql="call browse_products($ID)";
+                $result=execute_sql("shoppingdb", $sql, $link);
+
+                $row = mysql_fetch_row($result);
+
+                //顯示熱銷商品
+                echo "<div style=\"border: 1pt solid red;\" class=\"col\">
+                    <img style=\"width: 300px;\" src=\"" . $row[0] . "\" class=\"rounded mx-auto d-block\" alt=\"...\">
                     </div>
-                    <div style="border: 1pt solid red; margin-left: 3pt;" class="col-auto">
-                        <button type="button" class="btn btn-danger">加入購物車</button>
+                    <div style=\"border: 1pt solid red;\" class=\"col\">
+                    <h1 style=\"word-wrap:break-word\">" . $row[1] . "</h1>
+                    <br>
+                    <p style=\"word-wrap:break-word; width: 300pt;\">
+                        " . $row[2] . "
+                    </p>
+                    <h3 class=\"text-danger\">$" . $row[3] . "</h3>
+                    <br>
+                    <div class=\"row\">
+                        <div style=\"border: 1pt solid red;\" class=\"col-auto\">
+                            <select class=\"form-select\" aria-label=\"Default select example\">";
+                            
+                                for($v=1;$v<=number_format($row[4]);$v++)
+                                {
+                                    
+                                    echo "<option value=\"$v\">" . $v . "</option>";
+                                }
+                            echo "</select>
+                        </div>
+                        <div style=\"border: 1pt solid red; margin-left: 3pt;\" class=\"col-auto\">
+                            <button type=\"button\" class=\"btn btn-danger\">加入購物車</button>
+                        </div>
                     </div>
-                </div>
-            </div>
+                </div>";
+            }
+            ?>
         </div>
 </body>
 

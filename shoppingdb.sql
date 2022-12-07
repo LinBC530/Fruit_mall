@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2022-12-05 16:21:15
+-- 產生時間： 2022-12-07 20:31:06
 -- 伺服器版本： 10.1.38-MariaDB
 -- PHP 版本： 5.6.40
 
@@ -21,6 +21,24 @@ SET time_zone = "+00:00";
 --
 -- 資料庫： `shoppingdb`
 --
+
+DELIMITER $$
+--
+-- 程序
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `browse_products` (IN `input` VARCHAR(20))  BEGIN
+SELECT pImage,pName,pIntroduce,pPrice,pQuantity FROM products WHERE pID = input;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sales_ranking` ()  BEGIN
+SELECT pID,pImage,pName,pPrice FROM products ORDER BY pSales_volume DESC;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `search` (IN `input` VARCHAR(20))  BEGIN
+
+END$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -71,7 +89,8 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`pID`, `pType`, `pName`, `pPrice`, `pQuantity`, `pImage`, `pIntroduce`, `pSales_volume`) VALUES
-('1', '1', '可口可樂-易開罐330ml (24入/箱)', 315, 10, '/images/t1.jpg', '經典易開罐，勁享休閒時刻\r\n擋不住的暢快口感\r\n勁享美食，就要Coke', 10);
+('1', '1', '可口可樂-易開罐330ml', 35, 10, '../images/可口可樂.jpg', '經典易開罐，勁享休閒時刻\r\n擋不住的暢快口感\r\n勁享美食，就要Coke', 60),
+('2', '1', '麥香紅茶 300ml', 15, 5, '../images/麥香紅茶.jpg', '熟悉的麥香，最對味\r\n獨特的大麥香味，讓人回味無窮\r\n另有【麥香奶茶】、【麥香綠茶】', 100);
 
 -- --------------------------------------------------------
 
@@ -97,6 +116,16 @@ CREATE TABLE `user` (
   `phoneNumber` int(10) NOT NULL,
   `password` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 已傾印資料表的索引
+--
+
+--
+-- 資料表索引 `products`
+--
+ALTER TABLE `products`
+  ADD PRIMARY KEY (`pID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

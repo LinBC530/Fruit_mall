@@ -158,21 +158,21 @@
                 </div>
             </div>
         </div>
-        <div style="border: 1pt solid red; margin-top: 10px;" class="container">
+        <div style="margin-top: 10px;" class="container">
             <h1>熱銷商品</h1>
-            <div class="row justify-content-md-center">
+            <div style="border-radius:10pt; background:rgb(255, 255, 255); box-shadow: 12px 12px 7px rgba(0, 0, 0, 0.7);" id="display_area" class="row justify-content-md-center">
                 <!-- <div style="border: 1pt solid red;" class="col-2">
                         Menu
                     </div> -->
 
-                <div style="border: 1pt solid red;" class="col">
-                    <div style="border: 1pt solid red;" class="row">
+                <div class="col">
+                    <div class="row">
 
                     <?php
                             require_once("dbtools.inc.php");
 	
                             //指定顯示幾筆資料
-                            $records_per_page = 5;
+                            $records_per_page = 2;
                         
                             $link=create_connection();
                         
@@ -188,29 +188,32 @@
                             $j = 1;
                             while ($row = mysql_fetch_row($result) and $j <= $records_per_page)
                             {
-                                echo "<div class=\"card\" style=\"width: 12rem; margin: 20px;\">";
+                                for($i = 0; $i < $total_fields; $i+=4)
+                                {
+                                echo "<div class=\"card\" style=\"width: 12rem; margin: 20px;\"  onclick=\"location.href='../html/register.php?num=" . $row[$i] . "'\">";
                                 // echo "<a class=\"navbar-brand\" href=\"#\">";      
-                                for($i = 0; $i < $total_fields; $i+=3)
-                                    echo "<img src=\"" . $row[$i] . " \" class=\"card-img-top\" alt=\"...\">
+                                
+                                    echo "<img style=\"width: 120pt;height:120pt\" src=\"" . $row[$i+1] . " \" class=\"card-img-top\" alt=\"...\">
                                     <div class=\"card-body\">
-                                        <h5 class=\"card-title;\">" . $row[$i+1] . "</h5>
-                                        <h5 class=\"card-title text-danger\">" . $row[$i+2] . "</h5>
-                                        <a href=\"#\" class=\"btn btn-primary\">加入購物車</a>
+                                        <h5 class=\"card-title;\">" . $row[$i+2] . "</h5><br>
+                                        <h3 style=\"font-weight:bold;\" class=\"card-title text-danger\">$" . $row[$i+3] . "</h3>
                                     </div>";
+                                }
                                 $j++;
                                 echo "</div>";
+                                
                             }
                         ?>
 
-
                         <div class="card" style="width: 12rem; margin:
-                                20px;">
-                            <img src="../images/t1.jpg" class="card-img-top" alt="...">
+                                20px;" onclick="location.href='#'">
+                            <img src="../images/可口可樂.jpg" class="card-img-top" alt="...">
                             <div class="card-body">
                                 <h5 class="card-title">Card title</h5>
                                 <h5 class="card-title text-danger">500</h5>
-                                <a href="#" class="btn btn-primary">加入購物車</a>
+                                <a href="../html/test.php" class="btn btn-primary">加入購物車</a>
                             </div>
+                            <input type="hidden" value="test data" name="test">
                         </div>
                         <div class="card" style="width: 12rem; margin:
                                 20px;">
@@ -221,6 +224,8 @@
                                 <a href="#" class="btn btn-primary">加入購物車</a>
                             </div>
                         </div>
+                        
+
                         <div class="card" style="width: 12rem; margin:
                                 20px;">
                             <img src="../images/t2.jpg" class="card-img-top" alt="...">
