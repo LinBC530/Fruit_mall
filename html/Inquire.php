@@ -13,6 +13,7 @@
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="../css/home.css">
+    <link rel="stylesheet" type="text/css" href="../css/Inquire.css">
 </head>
 
 <body>
@@ -44,10 +45,6 @@
                 </form>
 
                 <ul class="navbar-nav align-items-center">
-                    <!-- <li class="nav-item">
-                            <a class="nav-link active" aria-current="page"
-                                href="/html/home.html">最近看過</a>
-                        </li> -->
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="../html/shopping_cart.html">購物車 <span
                                 class="badge bg-secondary">0</span></a>
@@ -70,9 +67,6 @@
                         </ul>
 
                     </li>
-                    <!-- <li class="nav-item">
-                            <a class="nav-link active" href="#">button</a>
-                        </li> -->
                     <li class="nav-item">
                         <a class="nav-link" href="../html/login.html"><button type="button"
                                 class="btn btn-success">登入</button></a>
@@ -117,59 +111,121 @@
             </li>
         </ul>
     </header>
+<?php
+    if(!empty($_GET["search"]))
+        $search = $_GET["search"];
+    if(!empty($_POST["search"]))
+        $search = $_POST["search"];
+    //判斷搜尋欄回傳值是否為空
+    if(!empty($search))
+    {
 
+        require_once("dbtools.inc.php");
+
+        $link=create_connection();
+
+        $sql="call search($search)";
+        $result=execute_sql("shoppingdb", $sql, $link);
+        
+
+        //判斷查詢條件是否有回傳值
+        if(!empty($result))
+        {
+            //判斷取得資料筆數是否大於等於10
+            if(mysql_num_rows($result)>10)
+                $data_num = mysql_num_rows($result);
+            else
+                $data_num = 10;
+
+            //取得欄位數
+            $total_fields = mysql_num_fields($result);
+        }
+        else
+            //將資料筆數設為0
+            $data_num = 0;
+        
+    }
+    else
+    {
+        ////將資料筆數設為0
+        $data_num = 0;
+    }
+
+    echo"
     <main>
-        <div style="margin-top: 30pt;" class="container">
-            <div style="padding: 3pt;border-radius: 15pt;background-color: rgb(255, 255, 255);box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.7);" class="row
-                    justify-content-md-center">
-                <div class="col-auto">
-                    <img style="width:100pt;height:100pt" src="../images/蘋果.jpg" class="rounded mx-auto
-                            d-block" alt="...">
-                </div>
-                <!--  word-wrap:break-word;  -->
-                <div style="overflow: hidden;" class="col">
-                    <h3 style="
-                            height: 25pt;overflow: hidden;text-overflow: ellipsis;">
-                        Title********************************************************************************************************************
-                    </h3>
-                    <p style="
-                        height: 25pt;overflow: hidden;text-overflow: ellipsis;">
-                        content****************************************************************************************************************************
-                    </p>
+        <div style=\"margin-top: 30pt;\" class=\"container\">";
+    //判斷是否有資料
+    if($data_num != 0)
+    {
+        //印出每筆資料
+        $j = 1;
+        while ($row = mysql_fetch_row($result) and $j <= $data_num)
+        {
+            for($i = 0; $i < $total_fields; $i+=5)
+            {
+                echo"
+                <div id=\"commodity\" style=\"padding: 3pt;border-radius: 15pt;background-color: rgb(255, 255, 255);box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.7);margin-bottom: 10pt;\" class=\"row justify-content-md-center\">
+                    <div class=\"col-auto\">
+                        <img id=\"commodity_image\" style=\"width:110pt;height:110pt\" src=\"" . $row[$i] . "\" class=\"rounded mx-autod-block\" alt=\"...\" onclick=\"location.href='../html/register.php?num=1'\">
+                    </div>
+                    <div style=\"overflow: hidden;\" class=\"col\">
+                        <h3 id=\"commodity_title\" style=\" height: 25pt;overflow: hidden;text-overflow: ellipsis;\"  onclick=\"location.href='../html/register.php?num=1'\">
+                                " . $row[$i+1] . "
+                        </h3>
+                        <p style=\"height: 35pt;overflow: hidden;text-overflow: ellipsis;\">
+                            " . $row[$i+2] . "
+                        </p>
 
-                    <div class="row justify-content-md-start">
-                        <div class="col-auto">
-                            <h3 style="color: red;">$15</h3>
-                        </div>
-                        <div class="col">
-                            <div class="row justify-content-md-end">
-                                <div class="col-auto">
-                                    <select class="form-select" aria-label="Default
-                    select example">";
-                                        <option value="1">1</option>
-                                    </select>
-                                </div>
-                                <div style="margin-left:
-                3pt;" class="col-auto">
-                                    <button type="button" class="btn btn-danger">加入購物車</button>
+                        <div class=\"row justify-content-md-start\">
+                            <div class=\"col-auto\">
+                                <h3 style=\"color: red;\">$" . $row[$i+3] . "</h3>
+                            </div>
+                            <div class=\"col\">
+                                <div class=\"row justify-content-md-end\">
+                                    <div class=\"col-auto\">
+                                        <select class=\"form-select\" aria-label=\"Defaultselect example\">";
+                                    for($v=1;$v<=number_format($row[$i+4]);$v++)
+                                    {
+                                        echo "<option value=\"$v\">" . $v . "</option>";
+                                    }
+                                    echo"</select>
+                                    </div>
+                                    <div style=\"margin-left: 3pt;\" class=\"col-auto\">
+                                        <button type=\"button\" class=\"btn btn-danger\">加入購物車</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                
-            </div>
+                </div>";
+            }
+            $j++;
+            // echo "</div>";
             
-
-            <div style="padding: 3pt;" class="row
-                    justify-content-md-center">
-                <div style="border: 1pt solid red;" class="col">
-                    <h1 style="text-align: center;">查無此商品</h1>
+        }
+        
+    }
+    else if($data_num == 0)
+    {
+        echo"
+        <div id=\"commodity\"
+            <div style=\"padding: 3pt;\" class=\"row
+                    justify-content-md-center\">
+                <div style=\"border: 1pt solid red;\" class=\"col\">
+                    <h1 style=\"text-align: center;\">";
+                    if(empty($_POST["search"]))
+                        echo "未輸入查詢商品名稱";
+                    else
+                        echo "查無此商品";
+        echo       "</h1>
                 </div>
             </div>
-
+        </div>";
+    }
+    echo"
         </div>
-    </main>
+    </main>";
+?>
 </body>
 
 </html>

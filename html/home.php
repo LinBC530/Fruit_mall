@@ -40,8 +40,8 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-                <form style="width:450px" class="input-group mx-auto" id="Search" role="search">
-                    <input class="form-control me-2" type="search" placeholder="搜尋">
+                <form style="width:450px" class="input-group mx-auto" id="Search" role="search" method="post" action="Inquire.php">
+                    <input name="search" class="form-control me-2" type="search" placeholder="搜尋">
                     <button class="btn btn-success" type="submit">搜尋</button>
                 </form>
 
@@ -89,22 +89,22 @@
     <header>
         <ul class="nav justify-content-center">
             <li class="nav-item">
-                <a class="nav-link" href="#">3C</a>
+                <a class="nav-link" href="../html/Inquire.php?search=1">3C</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">美妝</a>
+                <a class="nav-link" href="../html/Inquire.php?search=美妝">美妝</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">日常</a>
+                <a class="nav-link" href="../html/Inquire.php?search=日常">日常</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">食品</a>
+                <a class="nav-link" href="../html/Inquire.php?search=食品">食品</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">生活</a>
+                <a class="nav-link" href="../html/Inquire.php?search=生活">生活</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">戶外</a>
+                <a class="nav-link" href="../html/Inquire.php?search=戶外">戶外</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Link</a>
@@ -171,8 +171,8 @@
                     <?php
                             require_once("dbtools.inc.php");
 	
-                            //指定顯示幾筆資料
-                            $records_per_page = 2;
+                            // //指定顯示幾筆資料
+                            // $records_per_page = 2;
                         
                             $link=create_connection();
                         
@@ -180,13 +180,18 @@
                             $sql="call sales_ranking";
                             $result=execute_sql("shoppingdb", $sql, $link);
                             
+                            //判斷取得資料筆數是否大於等於10
+                            if(mysql_num_rows($result)>10)
+                                $data_num = mysql_num_rows($result);
+                            else
+                                $data_num = 10;
 
                             //取得欄位數
                             $total_fields = mysql_num_fields($result);
 
                             //顯示熱銷商品
                             $j = 1;
-                            while ($row = mysql_fetch_row($result) and $j <= $records_per_page)
+                            while ($row = mysql_fetch_row($result) and $j <= $data_num)
                             {
                                 for($i = 0; $i < $total_fields; $i+=4)
                                 {

@@ -155,7 +155,6 @@
                             
                                 for($v=1;$v<=number_format($row[4]);$v++)
                                 {
-                                    
                                     echo "<option value=\"$v\">" . $v . "</option>";
                                 }
                             echo "</select>

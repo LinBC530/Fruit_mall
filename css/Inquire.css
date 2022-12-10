@@ -1,0 +1,10 @@
+#commodity_title:hover
+{
+    color: blue;
+    text-decoration:underline;
+    cursor: pointer;
+}
+#commodity_image
+{
+    cursor: pointer;
+}
