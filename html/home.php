@@ -72,11 +72,16 @@
                             </li>
                             <li><a class="dropdown-item" href="#">帳號設定</a></li>
                         </ul>
-
                     </li>
-                    <!-- <li class="nav-item">
-                        <a class="nav-link active" href="#">button</a>
-                    </li> -->
+<?php 
+                    if(!empty($_SESSION['userName']) && !empty($_SESSION['userID']))
+                    {
+                        echo
+                        "<li style=\"width: 80pt;overflow: hidden;text-overflow: ellipsis;white-space:nowrap;\" class=\"nav-item\">
+                            <a class=\"nav-link disabled\">HI!" . $_SESSION['userName'] . "</a>
+                        </li>";
+                    }
+?>
                     <li class="nav-item">
 <?php
                     
