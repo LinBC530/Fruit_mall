@@ -18,7 +18,7 @@
 <body class="text-center">
 
     <main class="form-signin">
-        <!-- <form> -->
+        <form method="post" action="login.php">
             <a style="font-size: 35pt;" class="navbar-brand" href="../html/home.php">
                 <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"
                     class="bi bi-cart-fill" viewBox="0 0 16 16">
@@ -45,51 +45,122 @@
                 </ul>
             </h1>
         <?php
+            require_once("dbtools.inc.php");
+            $link=create_connection();
+
+            if(!empty($_POST["rName"]) && !empty($_POST["rPhone"]) && !empty($_POST["rPass1"]) && !empty($_POST["rPass2"]))
+            {
+                $rName = $_POST["rName"];
+                $rPhone = $_POST["rPhone"];
+                $rPass1 = $_POST["rPass1"];
+                $rPass2 = $_POST["rPass2"];
+
+                $sql="call select_user($rPhone,$rPass1)";
+                $result=execute_sql("shoppingdb", $sql, $link);
+
+                if(mysql_num_rows($result)==0)
+                {
+                    mysql_free_result($result);
+            	    mysql_close($link);
+                    $link=create_connection();
+
+                    $sql="call insert_user($rName,$rPhone,$rPass1,$rPass2)";
+                    $result=execute_sql("shoppingdb", $sql, $link);
+                    echo"
+                    <script>
+                        alert(\"註冊成功\");
+                    </script>";
+                }
+                else if (mysql_num_rows($result)!=0)
+                {
+                    echo"
+                    <script>
+                        alert(\"此號碼已被註冊\");
+                    </script>";
+                }
+            }
+            else if (!empty($_POST["lPhone"]) && !empty($_POST["lPass"]))
+            {
+                $lPhone = $_POST["lPhone"];
+                $lPass1 = $_POST["lPass"];
+
+                $sql="call select_user($lPhone,$lPass1)";
+                $result=execute_sql("shoppingdb", $sql, $link);
+                $data_num = mysql_num_rows($result);
+                $data = mysql_fetch_row($result);
+
+                if ($data_num!=0)
+                {
+                    // session_save_path('../tmp');
+                    session_start();
+                    $_SESSION['userID'] = $data[0];
+                    $_SESSION['userName'] = $data[1];
+                    header('refresh:0;url=home.php');
+                }
+                
+            }
+
+
             $Type = "login";
             if(!empty($_GET["type"]))
                 $Type = $_GET["type"];
 
             if($Type == "register")
             {
-            echo"
-            <div class=\"form-floating\">
-                <input type=\"text\" class=\"form-control\" id=\"floatingInput\" placeholder=\"text\" required>
-                <label for=\"floatingInput\">電話</label>
-            </div>
-            <div class=\"form-floating\">
-                <input type=\"password\" class=\"form-control\" id=\"Password1\" placeholder=\"Password\" required>
-                <label for=\"floatingPassword\">密碼</label>
-            </div>
-            <div class=\"form-floating\">
-                <input type=\"password\" class=\"form-control\" id=\"Password2\" placeholder=\"Password\"required>
-                <label for=\"floatingPassword\">再次輸入密碼</label>
-            </div>
-            <button style=\"margin-top: 20pt;\" class=\"w-100 btn btn-lg btn-primary\" type=\"submit\">註冊</button>";
+                
+
+                echo"
+                <div class=\"form-floating\">
+                    <input name=\"rName\" type=\"text\" class=\"form-control\" id=\"name\" placeholder=\"text\" required>
+                    <label for=\"floatingInput\">姓名</label>
+                </div>
+                <div class=\"form-floating\">
+                    <input name=\"rPhone\" type=\"text\" class=\"form-control\" id=\"phoneNB\" placeholder=\"text\" required>
+                    <label for=\"floatingInput\">電話</label>
+                </div>
+                <div class=\"form-floating\">
+                    <input name=\"rPass1\" type=\"password\" class=\"form-control\" id=\"PW1\" placeholder=\"Password\" required>
+                    <label for=\"floatingPassword\">密碼</label>
+                </div>
+                <div class=\"form-floating\">
+                    <input name=\"rPass2\" type=\"password\" class=\"form-control\" id=\"PW2\" placeholder=\"Password\"required>
+                    <label for=\"floatingPassword\">再次輸入密碼</label>
+                </div>
+                <button onClick=\"check()\" style=\"margin-top: 20pt;\" class=\"w-100 btn btn-lg btn-primary\" type=\"submit\">註冊</button>";
+                
+                echo"
+                <script>
+                function check(){
+                    if(PW1.value!=\"\" && PW2.value!=\"\" && phoneNB.value!=\"\" && name.value!=\"\" )
+                    {
+                        if(PW1.value != PW2.value)
+                        {
+                            alert(\"密碼不相符\");
+                            event.preventDefault();
+                        }
+                    }
+                }
+                </script>";
+            
+            
             }
             else if($Type == "login")
             {
-            echo"
-            <div class=\"form-floating\">
-                <input type=\"phone\" class=\"form-control\" id=\"PW1\" placeholder=\"phone\" required>
-                <label for=\"floatingInput\">帳號</label>
-            </div>
-            <div class=\"form-floating\">
-                <input type=\"password\" class=\"form-control\" id=\"PW2\" placeholder=\"Password\" required>
-                <label for=\"floatingPassword\">密碼</label>
-            </div>
-            <button id=\"btn\" style=\"margin-top: 20pt;\" class=\"w-100 btn btn-lg btn-primary\" type=\"submit\">登入</button>";
+                echo"
+                <div class=\"form-floating\">
+                    <input name=\"lPhone\" type=\"phone\" class=\"form-control\" id=\"Phone\" placeholder=\"text\" required>
+                    <label for=\"floatingInput\">帳號</label>
+                </div>
+                <div class=\"form-floating\">
+                    <input name=\"lPass\" type=\"password\" class=\"form-control\" id=\"PW1\" placeholder=\"Password\" required>
+                    <label for=\"floatingPassword\">密碼</label>
+                </div>
+                <button id=\"btn\" style=\"margin-top: 20pt;\" class=\"w-100 btn btn-lg btn-primary\" type=\"submit\">登入</button>";
             }
         ?>
             <p class="mt-5 mb-3 text-muted">&copy; 20XX–2022</p>
-        <!-- </form> -->
-        <!-- <script>
-            function test(){
-                if(PW1.value != PW2.value)
-                {
-                    alert("error");
-                }
-            }
-        </script> -->
+        </form>
+        
     </main>
 
 

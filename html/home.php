@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="zh-Hant">
 
@@ -74,11 +75,31 @@
 
                     </li>
                     <!-- <li class="nav-item">
-                            <a class="nav-link active" href="#">button</a>
-                        </li> -->
+                        <a class="nav-link active" href="#">button</a>
+                    </li> -->
                     <li class="nav-item">
-                        <a class="nav-link" href="../html/login.php"><button type="button"
-                                class="btn btn-success">登入</button></a>
+<?php
+                    
+                    if(!empty($_SESSION['userName']) && !empty($_SESSION['userID']))
+                    {
+                        echo "
+                        <form method=\"post\" action=\"home.php\">
+                            <input type=\"hidden\" name=\"distory\" value=\"distory\">
+                            <button type=\"submit\" class=\"btn btn-success\">登出</button>
+                            
+                        </from>";
+
+                        if(!empty($_POST['distory'])) {
+                            session_destroy();
+                            echo "<script> location.replace(\"home.php\"); </script>";
+                        }
+                    }
+                    else
+                    {
+                        echo "<a class=\"nav-link\" href=\"../html/login.php\"><button type=\"button\"
+                                class=\"btn btn-success\">登入</button></a>";
+                    }
+?>
                     </li>
                 </ul>
 
