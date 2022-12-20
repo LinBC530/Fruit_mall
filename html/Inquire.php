@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="zh-Hant">
 
@@ -15,6 +16,23 @@
     <link rel="stylesheet" type="text/css" href="../css/home.css">
     <link rel="stylesheet" type="text/css" href="../css/Inquire.css">
 </head>
+
+<?php
+    if(!empty($_SESSION['userID']) && !empty($_POST["pNum"]) && !empty($_POST["pID"]))
+    {
+        $pNum = $_POST["pNum"];
+        $pID = $_POST["pID"];
+
+        echo $pID;
+        // require_once("dbtools.inc.php");
+
+        // $link=create_connection();
+
+        // $sql="call insert_shappingCar('" . $_SESSION['userID'] . "','$pID','$pNum')";
+        // $result=execute_sql("shoppingdb", $sql, $link);
+    }
+?>
+
 
 <body>
     <nav class="navbar navbar-dark navbar-expand-lg">
@@ -112,11 +130,15 @@
         </ul>
     </header>
 <?php
+    //被點選
     if(!empty($_GET["search"]))
         $search = $_GET["search"];
+
+    //搜尋列
     if(!empty($_POST["search"]))
         $search = $_POST["search"];
-    //判斷搜尋欄回傳值是否為空
+
+    //判斷查詢的回傳值是否為空
     if(!empty($search))
     {
 
@@ -124,7 +146,7 @@
 
         $link=create_connection();
 
-        $sql="call search($search)";
+        $sql="call search('$search')";
         $result=execute_sql("shoppingdb", $sql, $link);
         
 
@@ -132,10 +154,10 @@
         if(!empty($result))
         {
             //判斷取得資料筆數是否大於等於10
-            if(mysql_num_rows($result)>10)
+            //if(mysql_num_rows($result)>10)
                 $data_num = mysql_num_rows($result);
-            else
-                $data_num = 10;
+            //else
+            //    $data_num = 10;
 
             //取得欄位數
             $total_fields = mysql_num_fields($result);
@@ -161,15 +183,15 @@
         $j = 1;
         while ($row = mysql_fetch_row($result) and $j <= $data_num)
         {
-            for($i = 0; $i < $total_fields; $i+=5)
+            for($i = 0; $i < $total_fields; $i+=6)
             {
                 echo"
                 <div id=\"commodity\" style=\"padding: 3pt;border-radius: 15pt;background-color: rgb(255, 255, 255);box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.7);margin-bottom: 10pt;\" class=\"row justify-content-md-center\">
                     <div class=\"col-auto\">
-                        <img id=\"commodity_image\" style=\"width:110pt;height:110pt\" src=\"" . $row[$i] . "\" class=\"rounded mx-autod-block\" alt=\"...\" onclick=\"location.href='../html/register.php?num=1'\">
+                        <img id=\"commodity_image\" style=\"width:110pt;height:110pt\" src=\"" . $row[$i] . "\" class=\"rounded mx-autod-block\" alt=\"...\" onclick=\"location.href='../html/register.php?num=" . $row[$i+5] . "'\">
                     </div>
                     <div style=\"overflow: hidden;\" class=\"col\">
-                        <h3 id=\"commodity_title\" style=\" height: 25pt;overflow: hidden;text-overflow: ellipsis;\"  onclick=\"location.href='../html/register.php?num=1'\">
+                        <h3 id=\"commodity_title\" style=\" height: 25pt;overflow: hidden;text-overflow: ellipsis;\"  onclick=\"location.href='../html/register.php?num=" . $row[$i+5] . "'\">
                                 " . $row[$i+1] . "
                         </h3>
                         <p style=\"height: 35pt;overflow: hidden;text-overflow: ellipsis;\">
@@ -181,19 +203,25 @@
                                 <h3 style=\"color: red;\">$" . $row[$i+3] . "</h3>
                             </div>
                             <div class=\"col\">
+                            <form method=\"post\" action=\"\">
                                 <div class=\"row justify-content-md-end\">
                                     <div class=\"col-auto\">
-                                        <select class=\"form-select\" aria-label=\"Defaultselect example\">";
+                                        <select name=\"pNum\" class=\"form-select\" aria-label=\"Defaultselect example\">";
                                     for($v=1;$v<=number_format($row[$i+4]);$v++)
                                     {
                                         echo "<option value=\"$v\">" . $v . "</option>";
                                     }
                                     echo"</select>
+                                    <input type=\"hidden\" name=\"pID\" value=\"" . $row[$i+5] . "\">
                                     </div>
                                     <div style=\"margin-left: 3pt;\" class=\"col-auto\">
-                                        <button type=\"button\" class=\"btn btn-danger\">加入購物車</button>
+                                        
+                                            <button type=\"submit\" class=\"btn btn-danger\">加入購物車</button>
+                                        
                                     </div>
                                 </div>
+                            </from>
+                            
                             </div>
                         </div>
                     </div>

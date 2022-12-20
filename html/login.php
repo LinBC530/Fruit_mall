@@ -48,14 +48,16 @@
             require_once("dbtools.inc.php");
             $link=create_connection();
 
+            //判斷是否有註冊或登入資料傳入
             if(!empty($_POST["rName"]) && !empty($_POST["rPhone"]) && !empty($_POST["rPass1"]) && !empty($_POST["rPass2"]))
             {
                 $rName = $_POST["rName"];
                 $rPhone = $_POST["rPhone"];
                 $rPass1 = $_POST["rPass1"];
                 $rPass2 = $_POST["rPass2"];
-
-                $sql="call select_user($rPhone,$rPass1)";
+                
+                //查詢是否有相同註冊資料
+                $sql="call select_user_phone('$rPhone')";
                 $result=execute_sql("shoppingdb", $sql, $link);
 
                 if(mysql_num_rows($result)==0)
@@ -64,7 +66,7 @@
             	    mysql_close($link);
                     $link=create_connection();
 
-                    $sql="call insert_user($rName,$rPhone,$rPass1,$rPass2)";
+                    $sql="call insert_user('$rName','$rPhone','$rPass1','$rPass2')";
                     $result=execute_sql("shoppingdb", $sql, $link);
                     echo"
                     <script>
@@ -84,10 +86,13 @@
                 $lPhone = $_POST["lPhone"];
                 $lPass1 = $_POST["lPass"];
 
-                $sql="call select_user($lPhone,$lPass1)";
+                $sql="call select_user('$lPhone','$lPass1')";
                 $result=execute_sql("shoppingdb", $sql, $link);
                 $data_num = mysql_num_rows($result);
                 $data = mysql_fetch_row($result);
+
+                echo $lPhone;
+                echo $lPass1;
 
                 if ($data_num!=0)
                 {
@@ -96,6 +101,13 @@
                     $_SESSION['userID'] = $data[0];
                     $_SESSION['userName'] = $data[1];
                     header('refresh:0;url=home.php');
+                }
+                else
+                {
+                    echo
+                    "<script>
+                        alert(\"請確認帳號及密碼是否正確\");
+                    </script>";
                 }
                 
             }

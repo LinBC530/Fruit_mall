@@ -2,7 +2,6 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -41,7 +40,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-                <form style="width:450px" class="input-group mx-auto" id="Search" role="search" method="post" action="Inquire.php">
+                <form style="width:450px" class="input-group mx-auto" id="Search" role="search" method="get" action="Inquire.php">
                     <input name="search" class="form-control me-2" type="search" placeholder="搜尋">
                     <button class="btn btn-success" type="submit">搜尋</button>
                 </form>
@@ -168,7 +167,7 @@
                             <img src="../images/P2.jpg" class="d-block w-100" alt="...">
                         </div>
                         <div class="carousel-item">
-                            <img src="../images/P3.png" class="d-block w-100" alt="...">
+                            <img src="../images/P3.jpg" class="d-block w-100" alt="...">
                         </div>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
@@ -224,7 +223,7 @@
                                 echo "<div class=\"card\" style=\"width: 12rem; margin: 20px;\"  onclick=\"location.href='../html/register.php?num=" . $row[$i] . "'\">";
                                 // echo "<a class=\"navbar-brand\" href=\"#\">";      
                                 
-                                    echo "<img style=\"width: 120pt;height:120pt\" src=\"" . $row[$i+1] . " \" class=\"card-img-top\" alt=\"...\">
+                                    echo "<img style=\"margin-top: 5pt;margin-left:auto;margin-right:auto;width: 120pt;height:120pt\" src=\"" . $row[$i+1] . " \" class=\"card-img-top\" alt=\"...\">
                                     <div class=\"card-body\">
                                         <h5 class=\"card-title;\">" . $row[$i+2] . "</h5><br>
                                         <h3 style=\"font-weight:bold;\" class=\"card-title text-danger\">$" . $row[$i+3] . "</h3>
@@ -236,7 +235,7 @@
                             }
                         ?>
 
-                        <div class="card" style="width: 12rem; margin:
+                        <!-- <div class="card" style="width: 12rem; margin:
                                 20px;" onclick="location.href='#'">
                             <img src="../images/可口可樂.jpg" class="card-img-top" alt="...">
                             <div class="card-body">
@@ -292,7 +291,7 @@
                                 <h5 class="card-title">33,000</h5>
                                 <a href="#" class="btn btn-primary">加入購物車</a>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
