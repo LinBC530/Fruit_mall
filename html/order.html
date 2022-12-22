@@ -13,11 +13,13 @@
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" type="text/css" href="/css/home.css">
+    <link rel="stylesheet" type="text/css" href="../css/home.css">
+    <link rel="stylesheet" type="text/css" href="../css/order.css">
 </head>
 
 <body>
-    <nav class="navbar navbar-dark navbar-expand-lg">
+    <div id="wrapper">
+    <nav class="navbar navbar-dark navbar-expand-lg sticky-top">
         <div class="container">
             <a style="font-size: 20pt" class="navbar-brand" href="/html/home.html">
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
@@ -118,9 +120,9 @@
         </ul>
     </header>
 
-    <main>
-        <div style="margin-top: 30pt; border: 1pt solid red;" class="container">
-            <div class="row justify-content-md-center">
+    <main style="border: 1pt solid red;">
+        <div style="margin-top: 20pt; border: 1pt solid red;" class="container">
+            <!-- <div class="row justify-content-md-center">
                 <div style="border: 1pt solid red;" class="col-1">
                     1
                 </div>
@@ -165,10 +167,156 @@
                 <div style="border: 1pt solid red;" class="col-auto">
                     取消訂單
                 </div>
+            </div> -->
+
+            
+            <h3>所有訂單</h3>
+            <div style="margin-top: 10pt;" class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      訂單編號    商品狀態
+                    </button>
+                  </h2>
+                  <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <h5>訂單內容</h5>
+                        <table class="table">
+                            <thead class="table-dark">
+                              <tr>
+                                <th scope="col">項次</th>
+                                <th scope="col">商品名稱</th>
+                                <th scope="col">購買數量</th>
+                                <th scope="col">單價</th>
+                                <th scope="col">小計</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <th scope="row">1</th>
+                                <td>蘋果</td>
+                                <td>1</td>
+                                <td>200</td>
+                                <td>400</td>
+                                </tr>
+                              <tr>
+                                <th scope="row">2</th>
+                                <td>櫻桃</td>
+                                <td>1</td>
+                                <td>300</td>
+                                <td>600</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                          <h3 id="total" style="margin-top: 10pt;" class="text-danger">總金額</h3>
+                          <div style="text-align: right;"><button type="submit" class="btn btn-success">取消訂單</button></div>
+                    </div>
+                  </div>
+                </div>
             </div>
+            <div style="margin-top: 10pt;" class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      訂單編號
+                    </button>
+                  </h2>
+                  <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <h5>訂單內容</h5>
+                        <table class="table">
+                            <thead class="table-dark">
+                              <tr>
+                                <th scope="col">項次</th>
+                                <th scope="col">商品名稱</th>
+                                <th scope="col">購買數量</th>
+                                <th scope="col">單價</th>
+                                <th scope="col">小計</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <th scope="row">1</th>
+                                <td>蘋果</td>
+                                <td>1</td>
+                                <td>200</td>
+                                <td>400</td>
+                                </tr>
+                              <tr>
+                                <th scope="row">2</th>
+                                <td>櫻桃</td>
+                                <td>1</td>
+                                <td>300</td>
+                                <td>600</td>
+                                </tr>
+                            </tbody>
+                          </table>
+                          <h3 id="total" style="margin-top: 10pt;" class="text-danger">總金額</h3>
+                          <div style="text-align: right;"><button type="submit" class="btn btn-success">取消訂單</button></div>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                      Accordion Item #3
+                    </button>
+                  </h2>
+                  <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                      <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                    </div>
+                  </div>
+                </div> -->
+              </div>
         </div>
 
+        
+
     </main>
+    </div>
+
+
+    <div id="footer" style="border: 1pt solid red;" class="container-fluid">
+        <footer class="d-flex flex-wrap justify-content-between
+                align-items-center py-3 my-4 border-top">
+            <div class="col-md-4 d-flex align-items-center">
+                <!-- <a href="/" class="mb-3 me-2 mb-md-0 text-muted
+                        text-decoration-none lh-1">
+                    <svg class="bi" width="30" height="24">
+                        <use xlink:href="#bootstrap" />
+                    </svg>
+                </a> -->
+                <span style="margin-left: 20pt;" class="mb-3 mb-md-0 text-muted">&copy; 2022
+                    Company, Inc</span>
+            </div>
+<!-- 
+            <ul class="nav col-md-4 justify-content-end
+                        list-unstyled d-flex">
+                <li class="ms-3">
+                    <a class="text-muted" href="#">
+                        <svg class="bi" width="24" height="24">
+                            <use xlink:href="#twitter"></use>
+                        </svg>
+                    </a>
+                </li>
+                <li class="ms-3">
+                    <a class="text-muted" href="#">
+                        <svg class="bi" width="24" height="24">
+                            <use xlink:href="#instagram"></use>
+                        </svg>
+                    </a>
+                </li>
+                <li class="ms-3">
+                    <a class="text-muted" href="#">
+                        <svg class="bi" width="24" height="24">
+                            <use xlink:href="#facebook"></use>
+                        </svg>
+                    </a>
+                </li>
+            </ul> -->
+        </footer>
+    </div>
 </body>
 
 </html>

@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="zh-Hant">
 
@@ -149,9 +150,11 @@
                     </p>
                     <h3 class=\"text-danger\">$" . $row[3] . "</h3>
                     <br>
+                    <form method=\"post\" action=\"\">
                     <div class=\"row\">
+                    
                         <div style=\"border: 1pt solid red;\" class=\"col-auto\">
-                            <select class=\"form-select\" aria-label=\"Default select example\">";
+                            <select name=\"pNum\" class=\"form-select\" aria-label=\"Default select example\">";
                             
                                 for($v=1;$v<=number_format($row[4]);$v++)
                                 {
@@ -160,11 +163,34 @@
                             echo "</select>
                         </div>
                         <div style=\"border: 1pt solid red; margin-left: 3pt;\" class=\"col-auto\">
-                            <button type=\"button\" class=\"btn btn-danger\">加入購物車</button>
+                            <button type=\"submit\" class=\"btn btn-danger\">加入購物車</button>
                         </div>
+                    
                     </div>
+                    </from>
                 </div>";
+                //釋放記憶體空間
+                //mysql_free_result($result);
+                mysql_close($link);
             }
+            ?>
+            <?php
+                if(!empty($_SESSION['userID']) && !empty($_POST["pNum"]) && !empty($_GET["num"]))
+                {
+                    $pNum = $_POST["pNum"];
+                    $pID = $_GET["num"];
+
+                    require_once("dbtools.inc.php");
+
+                    $link=create_connection();
+
+                    $sql="call insert_shappingCar('" . $_SESSION['userID'] . "','$pID','$pNum')";
+                    $result=execute_sql("shoppingdb", $sql, $link);
+
+                    //釋放記憶體空間
+                    //mysql_free_result($result);
+                    mysql_close($link);
+                }
             ?>
         </div>
 </body>

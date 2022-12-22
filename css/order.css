@@ -1,0 +1,10 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+#wrapper {
+    min-height: calc(100% - 100px); /*減去footer高度*/
+}
+#footer {
+    height: 100px; /*設定footer本身高度*/
+}

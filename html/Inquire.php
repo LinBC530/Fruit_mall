@@ -1,4 +1,4 @@
-<?php session_start(); ?>
+
 <!DOCTYPE html>
 <html lang="zh-Hant">
 
@@ -17,7 +17,7 @@
     <link rel="stylesheet" type="text/css" href="../css/Inquire.css">
 </head>
 
-<?php
+<!-- <?php
     if(!empty($_SESSION['userID']) && !empty($_POST["pNum"]) && !empty($_POST["pID"]))
     {
         $pNum = $_POST["pNum"];
@@ -31,7 +31,7 @@
         // $sql="call insert_shappingCar('" . $_SESSION['userID'] . "','$pID','$pNum')";
         // $result=execute_sql("shoppingdb", $sql, $link);
     }
-?>
+?> -->
 
 
 <body>
@@ -202,27 +202,7 @@
                             <div class=\"col-auto\">
                                 <h3 style=\"color: red;\">$" . $row[$i+3] . "</h3>
                             </div>
-                            <div class=\"col\">
-                            <form method=\"post\" action=\"\">
-                                <div class=\"row justify-content-md-end\">
-                                    <div class=\"col-auto\">
-                                        <select name=\"pNum\" class=\"form-select\" aria-label=\"Defaultselect example\">";
-                                    for($v=1;$v<=number_format($row[$i+4]);$v++)
-                                    {
-                                        echo "<option value=\"$v\">" . $v . "</option>";
-                                    }
-                                    echo"</select>
-                                    <input type=\"hidden\" name=\"pID\" value=\"" . $row[$i+5] . "\">
-                                    </div>
-                                    <div style=\"margin-left: 3pt;\" class=\"col-auto\">
-                                        
-                                            <button type=\"submit\" class=\"btn btn-danger\">加入購物車</button>
-                                        
-                                    </div>
-                                </div>
-                            </from>
                             
-                            </div>
                         </div>
                     </div>
                 </div>";
