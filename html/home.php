@@ -51,15 +51,40 @@
                                 href="/html/home.html">最近看過</a>
                         </li> -->
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page"
-                            href="../html/shopping_cart.html">購物車 <span
-                                class="badge bg-secondary">0</span></a>
+                        <a class="nav-link active" aria-current="page" href="../html/shopping_cart.php">
+                            購物車
+<?php
+                        if(!empty($_SESSION['userID']))
+                        {
+                            require_once("dbtools.inc.php");
+                            $link=create_connection();
+                            
+                            $sql="call select_shappingCarNum(" . $_SESSION['userID'] . ")";
+                            $result=execute_sql("shoppingdb", $sql, $link);
+                            $car_num = mysql_fetch_row($result)[0];
+                            
+
+                            //顯示用戶購物車資料筆數數
+                            if($car_num > 0)
+                                echo "<span class=\"badge bg-danger\">$car_num</span>";
+                            else
+                                echo "<span class=\"badge bg-secondary\">0</span>";
+                            
+                            //關閉資料庫連線
+                            mysql_close($link);
+                        }
+                        else
+                            echo "<span class=\"badge bg-secondary\">0</span>";
+?>
+                            <!-- </span> -->
+                        </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="#">我的訂單</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown"
+                        <a class="nav-link active" href="#">帳號設定</a>
+                        <!-- <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
                             顧客中心
                         </a>
@@ -70,7 +95,7 @@
                                 <hr class="dropdown-divider">
                             </li>
                             <li><a class="dropdown-item" href="#">帳號設定</a></li>
-                        </ul>
+                        </ul> -->
                     </li>
 <?php 
                     if(!empty($_SESSION['userName']) && !empty($_SESSION['userID']))
@@ -231,8 +256,8 @@
                                 }
                                 $j++;
                                 echo "</div>";
-                                
                             }
+                            mysql_close($link);
                         ?>
 
                         <!-- <div class="card" style="width: 12rem; margin:

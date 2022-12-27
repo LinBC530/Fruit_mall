@@ -28,7 +28,23 @@
             {
                 echo $_POST["county"];
                 echo $_POST["district"];
+                require_once("dbtools.inc.php");
+	
+                //指定每頁顯示幾筆記錄
+                //$records_per_page = 20;
+                
+                $link=create_connection();
+                
+                
+                //$sql="SELECT * FROM orders";
+                $sql="call insert_orders('','','','','','')";
+                $result=execute_sql("shoppingdb", $sql, $link);
+                
+                echo "總共: ".mysql_num_rows($result). " 筆";  //取得記錄數
+                
+                mysql_close($link);
             }
+            
         ?>
 
         <script>

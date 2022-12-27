@@ -139,13 +139,13 @@
                 $row = mysql_fetch_row($result);
 
                 //顯示熱銷商品
-                echo "<div style=\"border: 1pt solid red;\" class=\"col\">
+                echo "<div style=\"border: 1pt solid red;\" class=\"col-md-4\">
                     <img style=\"width: 300px;\" src=\"" . $row[0] . "\" class=\"rounded mx-auto d-block\" alt=\"...\">
                     </div>
-                    <div style=\"border: 1pt solid red;\" class=\"col\">
+                    <div style=\"border: 1pt solid red;\" class=\"col-md-5\">
                     <h1 style=\"word-wrap:break-word\">" . $row[1] . "</h1>
                     <br>
-                    <p style=\"word-wrap:break-word; width: 300pt;\">
+                    <p style=\"word-wrap:break-word;\" class=\"col-md\">
                         " . $row[2] . "
                     </p>
                     <h3 class=\"text-danger\">$" . $row[3] . "</h3>

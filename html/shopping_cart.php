@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="zh-Hant">
 
@@ -20,7 +21,7 @@
 <body>
     <nav class="navbar navbar-dark navbar-expand-lg">
         <div class="container">
-            <a style="font-size: 20pt" class="navbar-brand" href="/html/home.html">
+            <a style="font-size: 20pt" class="navbar-brand" href="../html/home.php">
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                     class="bi bi-cart-fill" viewBox="0 0 16 16">
                     <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1
@@ -118,11 +119,44 @@
             </li>
         </ul>
     </header>
+<?php
+if(!empty($_POST["del"]) && !empty($_POST["pID"])){
+    require_once("dbtools.inc.php");
+	$link=create_connection();
 
+	$sql="call delete_shappingCarItem('" . $_SESSION['userID'] . "','" . $_POST["pID"][0] . "')";
+	$result=execute_sql("shoppingdb", $sql, $link);
+    mysql_close($link);
+}
+else if(!empty($_POST["send_out"]))
+{
+    //echo $_POST["pID"][1];
+    require_once("dbtools.inc.php");
+	$link=create_connection();
+    $sql="call insert_orders('" . $_SESSION['userID'] . "','" . $_POST["pName"] . "','" . $_POST["pPhone"] . "','" . $_POST["county"] . "','" . $_POST["district"] . "','" . $_POST["house_number"] . "')";
+    //$sql="call insert_orders()";
+    //$result=execute_sql("shoppingdb", $sql, $link);
+    $result=execute_sql("shoppingdb", $sql, $link);
+    //echo $sql;
+    //echo $result;
+    $row = mysql_fetch_row($result);
+    
+    mysql_close($link);
+    $link=create_connection();
+    for($T=0;$T<count($_POST["pID"]);$T++)
+    {
+        //echo $row[0] . " " . $_SESSION['userID'] . " " . $_POST["pID"][$T] . " " . $_POST["pNumber"][$T] . " " . $_POST["pPrice"][$T];house_number
+	    $sql="call insert_orders_item('" . $row[0] . "','" . $_SESSION['userID'] . "','" . $_POST["pID"][$T] . "','" . $_POST["pNumber"][$T] . "','" . $_POST["pPrice"][$T] . "')";
+	    $result=execute_sql("shoppingdb", $sql, $link);
+    }
+    mysql_close($link);
+}
+?>
     <main>
         <div style="margin-top: 20pt; border: 1pt solid red;" class="container">
+        <form method="post">
             <div class="table-responsive">
-            <table class="table">
+            <table class="table align-middle">
                 <thead class="table-dark">
                   <tr>
                     <th scope="col">項次</th>
@@ -135,16 +169,70 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>蘋果</td>
-                    <td>1</td>
-                    <td>200</td>
-                    <td>400</td>
-                    <td>10</td>
-                    <td><button type="button" class="btn btn-danger">刪除</button></td>
-                  </tr>
-                  <tr>
+<?php
+            if(!empty($_SESSION['userID']))
+            {
+                require_once("dbtools.inc.php");
+                $link=create_connection();
+                
+                $sql="call select_shappingCar(" . $_SESSION['userID'] . ")";
+                $result=execute_sql("shoppingdb", $sql, $link);
+
+                //取得購物車商品資料筆數
+                $car_num = mysql_num_rows($result);
+
+                //取得欄位數
+                $total_fields = mysql_num_fields($result);
+
+                // echo"<tr>
+                // <form style=\"width: auto;\" method=\"get\" action=\"\">
+                //              <th scope=\"row\">" . 1 . "</th>
+                //              <td>" . 1 . "</td>
+                //              <td>" . 1 . "</td>
+                //              <td>" . 1 . "</td>
+                //              <td>" . 1 . "</td>
+                //              <td>" . 1 . "</td>
+                //              <input type=\"hidden\" name=\"pID\" value=\"123\">
+                //              <td><button name=\"del\" value=\"456\" type=\"submit\" class=\"btn btn-danger\">刪除</button></td>
+                // </from>
+                //     </tr>";
+                //印出用戶加入購物車的所有商品資訊
+                $j = 1;
+                while ($row = mysql_fetch_row($result) and $j <= $car_num)
+                {
+                    echo "<tr>";
+                    for($i = 0; $i < $total_fields; $i+=7)
+                    {
+                        echo"
+                        
+                            <th scope=\"row\">" . $j . "</th>
+                            <td>" . $row[$i] . "</td>
+                            <td>" . $row[$i+1] . "</td>
+                            <td>" . $row[$i+2] . "</td>
+                            <td>" . $row[$i+3] . "</td>
+                            <td>" . $row[$i+4] . "</td>
+                            <input type=\"hidden\" name=\"pID[]\" value=\"" . $row[$i+5] . "\">
+                            <input type=\"hidden\" name=\"pNumber[]\" value=\"" . $row[$i+1] . "\">
+                            <input type=\"hidden\" name=\"pPrice[]\" value=\"" . $row[$i+2] . "\">
+                            <td><button name=\"del\" value=\"$j\" type=\"submit\" class=\"btn btn-danger\">刪除</button></td>
+                        
+                        ";
+                    }
+                                
+                    $j++;
+                    echo "</tr>";     
+                }
+                mysql_close($link);
+            }
+            else
+            {
+                echo"
+                    <tr>
+                        <td style=\"font-size: 30pt;text-align: center\" colspan=\"7\" class=\"text-danger\">購物車是空的！</td>
+                    </tr>";    
+            }
+?>
+                  <!-- <tr>
                     <th scope="row">2</th>
                     <td>櫻桃</td>
                     <td>1</td>
@@ -152,7 +240,7 @@
                     <td>600</td>
                     <td>5</td>
                     <td><button type="button" class="btn btn-danger">刪除</button></td>
-                  </tr>
+                  </tr> -->
                 </tbody>
             </table>
             </div>
@@ -164,17 +252,18 @@
             <br>
             <h4>收件人</h4>
 
-            <form class="row g-3 city-selector-set">
+            <div class="row g-3 city-selector-set">
                 <div class="col-md-6">
                   <label for="inputEmail4" class="form-label">姓名</label>
-                  <input type="text" class="form-control" id="inputEmail4">
+                  <input name="pName" type="text" class="form-control" id="inputEmail4">
                 </div>
                 <div class="col-md-6">
                   <label for="inputPassword4" class="form-label">連絡電話</label>
-                  <input type="password" class="form-control" id="inputPassword4">
+                  <input name="pPhone" type="password" class="form-control" id="inputPassword4">
                 </div>
                 <div class="col-md-3">
                   <label for="inputCity" class="form-label">縣市</label>
+                  <!-- <select class="county form-select"></select> -->
                   <select class="county form-select"></select>
                 </div>
                 <div class="col-md-3">
@@ -183,15 +272,15 @@
                 </div>
                 <div class="col-md-6">
                   <label for="inputZip" class="form-label">鄉鎮及門牌號</label>
-                  <input type="text" class="form-control" id="inputZip">
+                  <input name="house_number" type="text" class="form-control" id="inputZip">
                 </div>
-              </form>
+            </div>
             
             <br>
-            <button type="button" class="btn btn-success">結帳</button>
+            <button name="send_out" value="send_out" type="submit" class="btn btn-success">結帳</button>
 
         </div>
-
+        </from>
     </main>
 
     <div class="container-fluid">
