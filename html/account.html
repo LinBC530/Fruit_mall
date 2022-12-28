@@ -124,22 +124,21 @@
         <div style="margin-top: 30pt; border: 1pt solid red;" class="container  city-selector-set">
             <form class="row g-3">
                 <h3>帳戶資料</h3>
-                <div class="col-md-3">
+                <div class="col-md-4">
                   <label for="inputAddress" class="form-label">姓名</label>
                   <input type="text" class="form-control" id="inputEmail4">
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-4">
                     <label for="inputAddress" class="form-label">手機號碼</label>
-                    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                    <input type="text" class="form-control" id="inputAddress" placeholder="09XXXXXXXX" disabled>
                   </div>
                 <div class="col-md-6">
                   <label for="inputPassword4" class="form-label">密碼</label><br>
-                  <!-- <input type="password" class="form-control" id="inputPassword4"> -->
-                  <a href="#">修改密碼</a>
+                  <a href="../html/changePW.html">修改密碼</a>
                 </div>
 
 
-                <h3 style="margin-top: 50pt;">發票寄送地址</h3>
+                <!-- <h3 style="margin-top: 50pt;">發票寄送地址</h3>
                 <div class="col-md-3">
                   <label for="inputCity" class="form-label">縣市</label>
                   <select class="county form-select"></select>
@@ -154,7 +153,7 @@
                 </div>
                 <div class="col-12">
                   <button type="submit" class="btn btn-primary">儲存修改</button>
-                </div>
+                </div> -->
               </form>
         </div>
 
@@ -204,12 +203,12 @@
     </div>
 </body>
 <script>
-    new TwCitySelector({
-            el: '.city-selector-set',
-            elCounty: '.county',
-            elDistrict: '.district',
-            countyFiledName: 'county',
-            districtFieldName: 'district'
-        });
+    // new TwCitySelector({
+    //         el: '.city-selector-set',
+    //         elCounty: '.county',
+    //         elDistrict: '.district',
+    //         countyFiledName: 'county',
+    //         districtFieldName: 'district'
+    //     });
 </script>
 </html>

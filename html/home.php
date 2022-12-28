@@ -31,7 +31,7 @@
                             0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1
                             0-2z"></path>
                 </svg>
-                購物商城
+                水果商城
             </a>
             <button style="margin-bottom: auto;" class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -80,7 +80,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">我的訂單</a>
+                        <a class="nav-link active" href="../html/order.php">我的訂單</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link active" href="#">帳號設定</a>
@@ -139,24 +139,27 @@
     <header>
         <ul class="nav justify-content-center">
             <li class="nav-item">
-                <a class="nav-link" href="../html/Inquire.php?search=1">3C</a>
+                <a class="nav-link" href="../html/Inquire.php?search=1">全部</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../html/Inquire.php?search=美妝">美妝</a>
+                <a class="nav-link" href="../html/Inquire.php?search=1">瓜果類</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../html/Inquire.php?search=日常">日常</a>
+                <a class="nav-link" href="../html/Inquire.php?search=1">核果類</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../html/Inquire.php?search=食品">食品</a>
+                <a class="nav-link" href="../html/Inquire.php?search=1">仁果類</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../html/Inquire.php?search=生活">生活</a>
+                <a class="nav-link" href="../html/Inquire.php?search=1">柑橘類</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../html/Inquire.php?search=戶外">戶外</a>
+                <a class="nav-link" href="../html/Inquire.php?search=1">漿果類</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="../html/Inquire.php?search=1">其他類</a>
+            </li>
+            <!-- <li class="nav-item">
                 <a class="nav-link" href="#">Link</a>
             </li>
             <li class="nav-item">
@@ -164,10 +167,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
+            </li> -->
         </ul>
     </header>
 

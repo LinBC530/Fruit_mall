@@ -150,6 +150,7 @@ else if(!empty($_POST["send_out"]))
 	    $result=execute_sql("shoppingdb", $sql, $link);
     }
     mysql_close($link);
+    echo "<meta http-equiv=\"refresh\" content=\"0;url=../html/home.php\">";
 }
 ?>
     <main>
@@ -170,6 +171,9 @@ else if(!empty($_POST["send_out"]))
                 </thead>
                 <tbody>
 <?php
+            //初始總金額
+            $price_sum = 0;
+
             if(!empty($_SESSION['userID']))
             {
                 require_once("dbtools.inc.php");
@@ -184,24 +188,14 @@ else if(!empty($_POST["send_out"]))
                 //取得欄位數
                 $total_fields = mysql_num_fields($result);
 
-                // echo"<tr>
-                // <form style=\"width: auto;\" method=\"get\" action=\"\">
-                //              <th scope=\"row\">" . 1 . "</th>
-                //              <td>" . 1 . "</td>
-                //              <td>" . 1 . "</td>
-                //              <td>" . 1 . "</td>
-                //              <td>" . 1 . "</td>
-                //              <td>" . 1 . "</td>
-                //              <input type=\"hidden\" name=\"pID\" value=\"123\">
-                //              <td><button name=\"del\" value=\"456\" type=\"submit\" class=\"btn btn-danger\">刪除</button></td>
-                // </from>
-                //     </tr>";
+                
+
                 //印出用戶加入購物車的所有商品資訊
                 $j = 1;
                 while ($row = mysql_fetch_row($result) and $j <= $car_num)
                 {
                     echo "<tr>";
-                    for($i = 0; $i < $total_fields; $i+=7)
+                    for($i = 0; $i < $total_fields; $i+=8)
                     {
                         echo"
                         
@@ -218,7 +212,7 @@ else if(!empty($_POST["send_out"]))
                         
                         ";
                     }
-                                
+                    $price_sum = $row[6];
                     $j++;
                     echo "</tr>";     
                 }
@@ -232,21 +226,13 @@ else if(!empty($_POST["send_out"]))
                     </tr>";    
             }
 ?>
-                  <!-- <tr>
-                    <th scope="row">2</th>
-                    <td>櫻桃</td>
-                    <td>1</td>
-                    <td>300</td>
-                    <td>600</td>
-                    <td>5</td>
-                    <td><button type="button" class="btn btn-danger">刪除</button></td>
-                  </tr> -->
                 </tbody>
             </table>
             </div>
 
-            <h3 id="total" style="margin-top: 10pt;" class="text-danger">總金額</h3>
+            <h3 id="total" style="margin-top: 10pt;" class="text-danger">總金額 $<?php echo $price_sum; ?></h3>
             <br>
+            
             <h4>付款方式</h4>
             <p>目前僅提供貨到付款</p>
             <br>
@@ -255,29 +241,29 @@ else if(!empty($_POST["send_out"]))
             <div class="row g-3 city-selector-set">
                 <div class="col-md-6">
                   <label for="inputEmail4" class="form-label">姓名</label>
-                  <input name="pName" type="text" class="form-control" id="inputEmail4">
+                  <input name="pName" type="text" class="form-control" id="inputName">
                 </div>
                 <div class="col-md-6">
                   <label for="inputPassword4" class="form-label">連絡電話</label>
-                  <input name="pPhone" type="password" class="form-control" id="inputPassword4">
+                  <input name="pPhone" type="text" class="form-control" id="inputPhone">
                 </div>
                 <div class="col-md-3">
                   <label for="inputCity" class="form-label">縣市</label>
                   <!-- <select class="county form-select"></select> -->
-                  <select class="county form-select"></select>
+                  <select class="county form-select" id="inputCounty"></select>
                 </div>
                 <div class="col-md-3">
                   <label for="inputState" class="form-label">區域</label>
-                  <select class="district form-select"></select>
+                  <select class="district form-select" id="inputDistrict"></select>
                 </div>
                 <div class="col-md-6">
                   <label for="inputZip" class="form-label">鄉鎮及門牌號</label>
-                  <input name="house_number" type="text" class="form-control" id="inputZip">
+                  <input name="house_number" type="text" class="form-control" id="inputHouseNumber">
                 </div>
             </div>
             
             <br>
-            <button name="send_out" value="send_out" type="submit" class="btn btn-success">結帳</button>
+            <button id="send_out" name="send_out" value="send_out" type="submit" class="btn btn-success">結帳</button>
 
         </div>
         </from>
@@ -331,6 +317,25 @@ else if(!empty($_POST["send_out"]))
             elDistrict: '.district',
             countyFiledName: 'county',
             districtFieldName: 'district'
-        });
+    });
+
+    $('#send_out').click(function() {
+        if ($('#inputName').val().length === 0 || 
+        $('#inputPhone').val().length === 0 || 
+        $('#inputCounty').val().length === 0 || 
+        $('#inputDistrict').val().length === 0 || 
+        $('#inputHouseNumber').val().length === 0) {
+            alert('欄位未填寫完成');
+            event.preventDefault();
+        }
+    });
+
+    // $(document).ready(function() {
+    //     $('#submit').click(function() {
+    //         if ($('#name').val().length === 0) {
+    //             alert('Enter your name!');
+    //         }
+    //     })
+    // });
 </script>
 </html>
