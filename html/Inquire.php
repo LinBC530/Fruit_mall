@@ -221,10 +221,10 @@
                     justify-content-md-center\">
                 <div style=\"border: 1pt solid red;\" class=\"col\">
                     <h1 style=\"text-align: center;\">";
-                    if(empty($_POST["search"]))
-                        echo "未輸入查詢商品名稱";
+                    if(!empty($_POST["search"]) || !empty($_GET["search"]))
+                        echo "查無商品";
                     else
-                        echo "查無此商品";
+                        echo "未輸入查詢商品名稱";
         echo       "</h1>
                 </div>
             </div>

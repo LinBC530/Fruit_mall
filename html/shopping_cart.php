@@ -1,4 +1,10 @@
-<?php session_start(); ?>
+<?php 
+session_start();
+if (empty($_SESSION["userID"])) 
+{
+    echo "<meta http-equiv=\"refresh\" content=\"0;url=../html/login.php\">";
+}
+?>
 <!DOCTYPE html>
 <html lang="zh-Hant">
 
@@ -120,12 +126,24 @@
         </ul>
     </header>
 <?php
-if(!empty($_POST["del"]) && !empty($_POST["pID"])){
+//刪除庫存不足商品
+if(!empty($_POST["Modal_del"]) && !empty($_POST["Modal_pID"])){
+    $del_num = count($_POST["Modal_pID"]);
     require_once("dbtools.inc.php");
-	$link=create_connection();
-
-	$sql="call delete_shappingCarItem('" . $_SESSION['userID'] . "','" . $_POST["pID"][0] . "')";
-	$result=execute_sql("shoppingdb", $sql, $link);
+    for($del_N=0;$del_N<$del_num;$del_N++)
+    {
+        $link=create_connection();
+        $sql="call delete_shappingCarItem('" . $_SESSION['userID'] . "','" . $_POST["Modal_pID"][$del_N] . "')";
+        $result=execute_sql("shoppingdb", $sql, $link);
+        mysql_close($link);
+    }
+}
+else if(!empty($_POST["item_del"]) && !empty($_POST["item_pID"])){
+    $del_N = $_POST["item_del"]-1;
+    require_once("dbtools.inc.php");
+    $link=create_connection();
+    $sql="call delete_shappingCarItem('" . $_SESSION['userID'] . "','" . $_POST["item_pID"][$del_N] . "')";
+    $result=execute_sql("shoppingdb", $sql, $link);
     mysql_close($link);
 }
 else if(!empty($_POST["send_out"]))
@@ -138,10 +156,9 @@ else if(!empty($_POST["send_out"]))
     
     mysql_close($link);
     $link=create_connection();
-    for($T=0;$T<count($_POST["pID"]);$T++)
+    for($T=0;$T<count($_POST["item_pID"]);$T++)
     {
-        //echo $row[0] . " " . $_SESSION['userID'] . " " . $_POST["pID"][$T] . " " . $_POST["pNumber"][$T] . " " . $_POST["pPrice"][$T];house_number
-	    $sql="call insert_orders_item('" . $row[0] . "','" . $_SESSION['userID'] . "','" . $_POST["pID"][$T] . "','" . $_POST["pNumber"][$T] . "','" . $_POST["pPrice"][$T] . "')";
+	    $sql="call insert_orders_item('" . $row[0] . "','" . $_SESSION['userID'] . "','" . $_POST["item_pID"][$T] . "','" . $_POST["pNumber"][$T] . "','" . $_POST["pPrice"][$T] . "')";
 	    $result=execute_sql("shoppingdb", $sql, $link);
     }
     mysql_close($link);
@@ -160,7 +177,7 @@ else if(!empty($_POST["send_out"]))
                     <th scope="col">購買數量</th>
                     <th scope="col">單價</th>
                     <th scope="col">小計</th>
-                    <th scope="col">可買量</th>
+                    <th scope="col">貨量</th>
                     <th scope="col"></th>
                   </tr>
                 </thead>
@@ -168,6 +185,9 @@ else if(!empty($_POST["send_out"]))
 <?php
             //初始總金額
             $price_sum = 0;
+
+            //儲存數量不足的商品ID
+            $deleteData = array();
 
             if(!empty($_SESSION['userID']))
             {
@@ -184,32 +204,45 @@ else if(!empty($_POST["send_out"]))
                 $total_fields = mysql_num_fields($result);
 
                 
-
-                //印出用戶加入購物車的所有商品資訊
-                $j = 1;
-                while ($row = mysql_fetch_row($result) and $j <= $car_num)
+                if($car_num>0)
                 {
-                    echo "<tr>";
-                    for($i = 0; $i < $total_fields; $i+=8)
+                    //印出用戶加入購物車的所有商品資訊
+                    $j = 1;
+                    while ($row = mysql_fetch_row($result) and $j <= $car_num)
                     {
-                        echo"
-                        
-                            <th scope=\"row\">" . $j . "</th>
-                            <td>" . $row[$i] . "</td>
-                            <td>" . $row[$i+1] . "</td>
-                            <td>" . $row[$i+2] . "</td>
-                            <td>" . $row[$i+3] . "</td>
-                            <td>" . $row[$i+4] . "</td>
-                            <input type=\"hidden\" name=\"pID[]\" value=\"" . $row[$i+5] . "\">
-                            <input type=\"hidden\" name=\"pNumber[]\" value=\"" . $row[$i+1] . "\">
-                            <input type=\"hidden\" name=\"pPrice[]\" value=\"" . $row[$i+2] . "\">
-                            <td><button name=\"del\" value=\"$j\" type=\"submit\" class=\"btn btn-danger\">刪除</button></td>
-                        
-                        ";
+                        echo "<tr>";
+                        for($i = 0; $i < $total_fields; $i+=8)
+                        {
+                            echo"
+                            
+                                <th scope=\"row\">" . $j . "</th>
+                                <td>" . $row[$i] . "</td>
+                                <td>" . $row[$i+1] . "</td>
+                                <td>" . $row[$i+2] . "</td>
+                                <td>" . $row[$i+3] . "</td>
+                                <td>" . $row[$i+4] . "</td>
+                                <input type=\"hidden\" name=\"item_pID[]\" value=\"" . $row[$i+5] . "\">
+                                <input type=\"hidden\" name=\"pNumber[]\" value=\"" . $row[$i+1] . "\">
+                                <input type=\"hidden\" name=\"pPrice[]\" value=\"" . $row[$i+2] . "\">
+                                <td><button name=\"item_del\" value=\"$j\" type=\"submit\" class=\"btn btn-danger\">刪除</button></td>
+                            
+                            ";
+                            if ($row[$i+1]>$row[$i+4])
+                            {
+                                $deleteData[] = $row[$i+5];
+                            }
+                        }
+                        $price_sum = $row[6];
+                        $j++;
+                        echo "</tr>";     
                     }
-                    $price_sum = $row[6];
-                    $j++;
-                    echo "</tr>";     
+                }
+                else
+                {
+                    echo"
+                    <tr>
+                        <td style=\"font-size: 30pt;text-align: center\" colspan=\"7\" class=\"text-danger\">購物車是空的！</td>
+                    </tr>";
                 }
                 mysql_close($link);
             }
@@ -263,6 +296,34 @@ else if(!empty($_POST["send_out"]))
         </div>
         </from>
     </main>
+<?php
+if (!empty($deleteData))
+{
+    echo"
+        <!-- Modal -->
+        <form method=\"post\">
+        <div class=\"modal fade\" id=\"staticBackdrop\" data-bs-backdrop=\"static\" data-bs-keyboard=\"false\" tabindex=\"-1\" aria-labelledby=\"staticBackdropLabel\" aria-hidden=\"true\">
+        <div class=\"modal-dialog\">
+            <div class=\"modal-content\">
+            <div class=\"modal-header\">
+                <h5 class=\"modal-title text-danger\" id=\"staticBackdropLabel\">商品數量不足</h5>
+            </div>
+            <div class=\"modal-body\">
+                購物車內含有庫存不足購買量之商品，將自動從購物車刪除數量不足商品。
+            </div>
+            <div class=\"modal-footer\">";
+            for ($d=0;$d<count($deleteData);$d++)
+            echo"<input type=\"hidden\" name=\"Modal_pID[]\" value=\"" . $deleteData[$d] . "\">";
+            echo"<button value=\"Modal_del\" name=\"Modal_del\" type=\"submit\" class=\"btn btn-primary\">確定</button>
+            </div>
+            </div>
+        </div>
+        </div>
+        </from>";
+}
+?>
+
+
 
     <div class="container-fluid">
         <footer class="d-flex flex-wrap justify-content-between
@@ -320,17 +381,14 @@ else if(!empty($_POST["send_out"]))
         $('#inputCounty').val().length === 0 || 
         $('#inputDistrict').val().length === 0 || 
         $('#inputHouseNumber').val().length === 0) {
-            alert('欄位未填寫完成');
+            alert('收件人區域欄位未填寫完成');
             event.preventDefault();
         }
     });
 
-    // $(document).ready(function() {
-    //     $('#submit').click(function() {
-    //         if ($('#name').val().length === 0) {
-    //             alert('Enter your name!');
-    //         }
-    //     })
-    // });
+    $(window).ready(() => {
+	    $('#staticBackdrop').modal('show');
+    })
+
 </script>
 </html>

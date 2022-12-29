@@ -1,4 +1,10 @@
-<?php session_start(); ?>
+<?php 
+session_start(); 
+if (empty($_SESSION["userID"])) 
+{
+    echo "<meta http-equiv=\"refresh\" content=\"0;url=../html/login.php\">";
+}
+?>
 <!DOCTYPE html>
 <html lang="zh-Hant">
 
@@ -125,6 +131,16 @@
         <div style="margin-top: 20pt; border: 1pt solid red;" class="container">
             <h3>所有訂單</h3>
 <?php
+
+if(!empty($_POST['order_ID']))
+{
+    require_once("dbtools.inc.php");
+    $link=create_connection();
+    $sql="call update_order_Cancel(" . $_POST['order_ID'] . ")";
+    execute_sql("shoppingdb", $sql, $link);
+    mysql_close($link);
+}
+
 if(!empty($_SESSION['userID']))
 {
     require_once("dbtools.inc.php");
@@ -220,9 +236,13 @@ if(!empty($_SESSION['userID']))
                           <p>姓名：" . $row[2] . "</p>
                           <p>電話：" . $row[3] . "</p>
                           <p style=\"word-wrap:break-word\">收件地址：" . $row[4] . $row[5] . $row[6] . "</p>";
-                          if ($row[7] == "待處理") {
-                            echo "<div style=\"text-align: right;\"><button type=\"submit\" class=\"btn btn-success\">取消訂單</button></div>";
-                          }
+                        if ($row[7] == "待處理") {
+                            echo"<div style=\"text-align: right;\">
+                                    <form method=\"post\">
+                                        <button value=\"" . $row[0] . "\" name=\"order_ID\" type=\"submit\" class=\"btn btn-success\">取消訂單</button>
+                                    </from>
+                                </div>";
+                        }
                           else
                           {
                             echo "<div style=\"text-align: right;\"><button type=\"submit\" class=\"btn btn-success\" disabled>取消訂單</button></div>";

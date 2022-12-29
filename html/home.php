@@ -18,7 +18,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-dark navbar-expand-lg">
+    <nav class="navbar navbar-dark navbar-expand-lg sticky-top">
         <div class="container">
             <a style="font-size: 20pt" class="navbar-brand" href="../html/home.php">
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
@@ -138,26 +138,26 @@
 
     <header>
         <ul class="nav justify-content-center">
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link" href="../html/Inquire.php?search=1">全部</a>
+            </li> -->
+            <li class="nav-item">
+                <a class="nav-link" href="../html/Inquire.php?search=melon">瓜果類</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../html/Inquire.php?search=1">瓜果類</a>
+                <a class="nav-link" href="../html/Inquire.php?search=drupe">核果類</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../html/Inquire.php?search=1">核果類</a>
+                <a class="nav-link" href="../html/Inquire.php?search=pome_fruit">仁果類</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../html/Inquire.php?search=1">仁果類</a>
+                <a class="nav-link" href="../html/Inquire.php?search=tangerine">柑橘類</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../html/Inquire.php?search=1">柑橘類</a>
+                <a class="nav-link" href="../html/Inquire.php?search=berry">漿果類</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../html/Inquire.php?search=1">漿果類</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="../html/Inquire.php?search=1">其他類</a>
+                <a class="nav-link" href="../html/Inquire.php?search=other">其他類</a>
             </li>
             <!-- <li class="nav-item">
                 <a class="nav-link" href="#">Link</a>
@@ -259,64 +259,6 @@
                             }
                             mysql_close($link);
                         ?>
-
-                        <!-- <div class="card" style="width: 12rem; margin:
-                                20px;" onclick="location.href='#'">
-                            <img src="../images/可口可樂.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <h5 class="card-title text-danger">500</h5>
-                                <a href="../html/test.php" class="btn btn-primary">加入購物車</a>
-                            </div>
-                            <input type="hidden" value="test data" name="test">
-                        </div>
-                        <div class="card" style="width: 12rem; margin:
-                                20px;">
-                            <img src="../images/t2.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <h5 class="card-title">33,000</h5>
-                                <a href="#" class="btn btn-primary">加入購物車</a>
-                            </div>
-                        </div>
-                        
-
-                        <div class="card" style="width: 12rem; margin:
-                                20px;">
-                            <img src="../images/t2.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <div style="width: 100pt; border: 1pt solid red;"><h5 class="card-title">Card title</h5></div>
-                                <h5 class="card-title">33,000</h5>
-                                <a href="#" class="btn btn-primary">加入購物車</a>
-                            </div>
-                        </div>
-                        <div class="card" style="width: 12rem; margin:
-                                20px;">
-                            <img src="../images/t2.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <h5 class="card-title">33,000</h5>
-                                <a href="#" class="btn btn-primary">加入購物車</a>
-                            </div>
-                        </div>
-                        <div class="card" style="width: 12rem; margin:
-                                20px;">
-                            <img src="../images/t2.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <h5 class="card-title">33,000</h5>
-                                <a href="#" class="btn btn-primary">加入購物車</a>
-                            </div>
-                        </div>
-                        <div class="card" style="width: 12rem; margin:
-                                20px;">
-                            <img src="../images/t2.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <h5 class="card-title">33,000</h5>
-                                <a href="#" class="btn btn-primary">加入購物車</a>
-                            </div>
-                        </div> -->
                     </div>
                 </div>
             </div>

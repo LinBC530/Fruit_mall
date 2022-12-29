@@ -1,4 +1,10 @@
-<?php session_start(); ?>
+<?php 
+session_start(); 
+if (empty($_SESSION["userID"])) 
+{
+    echo "<meta http-equiv=\"refresh\" content=\"0;url=../html/login.php\">";
+}
+?>
 <!DOCTYPE html>
 <html lang="zh-Hant">
 

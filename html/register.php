@@ -162,9 +162,12 @@
                                 }
                             echo "</select>
                         </div>
-                        <div style=\"border: 1pt solid red; margin-left: 3pt;\" class=\"col-auto\">
-                            <button type=\"submit\" class=\"btn btn-danger\">加入購物車</button>
-                        </div>
+                        <div style=\"border: 1pt solid red; margin-left: 3pt;\" class=\"col-auto\">";
+                        if($row[4]>=1)
+                            echo"<button type=\"submit\" class=\"btn btn-danger\">加入購物車</button>";
+                        else
+                            echo"<button type=\"submit\" class=\"btn btn-danger\" disabled>加入購物車</button>";
+                        echo"</div>
                     
                     </div>
                     </from>
@@ -191,8 +194,11 @@
                     //mysql_free_result($result);
                     mysql_close($link);
                 }
+                else if(empty($_SESSION['userID']) && !empty($_POST["pNum"]))
+                {
+                    echo "<meta http-equiv=\"refresh\" content=\"0;url=../html/login.php\">";
+                }
             ?>
         </div>
 </body>
-
 </html>

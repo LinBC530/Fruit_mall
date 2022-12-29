@@ -91,8 +91,8 @@
                 $data_num = mysql_num_rows($result);
                 $data = mysql_fetch_row($result);
 
-                echo $lPhone;
-                echo $lPass1;
+                // echo $lPhone;
+                // echo $lPass1;
 
                 if ($data_num!=0)
                 {
@@ -123,19 +123,19 @@
 
                 echo"
                 <div class=\"form-floating\">
-                    <input name=\"rName\" type=\"text\" class=\"form-control\" id=\"name\" placeholder=\"text\" required>
+                    <input name=\"rName\" type=\"text\" class=\"form-control\" id=\"name\" placeholder=\"text\" maxlength=\"10\" required>
                     <label for=\"floatingInput\">姓名</label>
                 </div>
                 <div class=\"form-floating\">
-                    <input name=\"rPhone\" type=\"text\" class=\"form-control\" id=\"phoneNB\" placeholder=\"text\" required>
+                    <input name=\"rPhone\" type=\"tel\" class=\"form-control\" id=\"phoneNB\" placeholder=\"text\" maxlength=\"10\" required=\"\d+\">
                     <label for=\"floatingInput\">電話</label>
                 </div>
                 <div class=\"form-floating\">
-                    <input name=\"rPass1\" type=\"password\" class=\"form-control\" id=\"PW1\" placeholder=\"Password\" required>
+                    <input name=\"rPass1\" type=\"password\" class=\"form-control\" id=\"PW1\" placeholder=\"Password\" maxlength=\"10\" required>
                     <label for=\"floatingPassword\">密碼</label>
                 </div>
                 <div class=\"form-floating\">
-                    <input name=\"rPass2\" type=\"password\" class=\"form-control\" id=\"PW2\" placeholder=\"Password\"required>
+                    <input name=\"rPass2\" type=\"password\" class=\"form-control\" id=\"PW2\" placeholder=\"Password\" maxlength=\"10\"required>
                     <label for=\"floatingPassword\">再次輸入密碼</label>
                 </div>
                 <button onClick=\"check()\" style=\"margin-top: 20pt;\" class=\"w-100 btn btn-lg btn-primary\" type=\"submit\">註冊</button>";
@@ -160,11 +160,11 @@
             {
                 echo"
                 <div class=\"form-floating\">
-                    <input name=\"lPhone\" type=\"phone\" class=\"form-control\" id=\"Phone\" placeholder=\"text\" required>
+                    <input name=\"lPhone\" type=\"tel\" class=\"form-control\" id=\"Phone\" placeholder=\"text\" maxlength=\"10\" required>
                     <label for=\"floatingInput\">帳號</label>
                 </div>
                 <div class=\"form-floating\">
-                    <input name=\"lPass\" type=\"password\" class=\"form-control\" id=\"PW1\" placeholder=\"Password\" required>
+                    <input name=\"lPass\" type=\"password\" class=\"form-control\" id=\"PW1\" placeholder=\"Password\" maxlength=\"10\" required=\"\d+\">
                     <label for=\"floatingPassword\">密碼</label>
                 </div>
                 <button id=\"btn\" style=\"margin-top: 20pt;\" class=\"w-100 btn btn-lg btn-primary\" type=\"submit\">登入</button>";
