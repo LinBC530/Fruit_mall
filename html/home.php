@@ -83,7 +83,7 @@
                         <a class="nav-link active" href="../html/order.php">我的訂單</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link active" href="#">帳號設定</a>
+                        <a class="nav-link active" href="../html/account.php">帳號設定</a>
                         <!-- <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
                             顧客中心

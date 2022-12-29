@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="zh-Hant">
 
@@ -18,7 +19,7 @@
 <body class="text-center">
 
     <main class="form-signin">
-        <form method="post" action="login.php">
+        
             <a style="font-size: 35pt;" class="navbar-brand" href="../html/home.php">
                 <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"
                     class="bi bi-cart-fill" viewBox="0 0 16 16">
@@ -30,30 +31,60 @@
                             0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1
                             0-2z"></path>
                 </svg>
-                購物商城
+                水果商城
             </a>
             <h1 style="margin-top: 10pt;" class="h3 mb-3 fw-normal">
                 修改密碼
             </h1>
+        <form method="post">
             <div class="form-floating">
-                <input name="rPass1" type="password" class="form-control" id="PW1" placeholder="Password" required>
+                <input name="oldPass" type="password" class="form-control" id="OPW" placeholder="Password" required>
                 <label for="floatingPassword">舊密碼</label>
             </div>
             <div class="form-floating">
-                <input name="rPass1" type="password" class="form-control" id="PW1" placeholder="Password" required>
+                <input name="newPass1" type="password" class="form-control" id="PW1" placeholder="Password" required>
                 <label for="floatingPassword">新密碼</label>
             </div>
             <div class="form-floating">
-                <input name="rPass2" type="password" class="form-control" id="PW2" placeholder="Password" required>
+                <input name="newPass2" type="password" class="form-control" id="PW2" placeholder="Password" required>
                 <label for="floatingPassword">再次輸入新密碼</label>
             </div>
-            <button style="margin-top: 20pt;" class="w-100 btn btn-lg btn-primary" type="submit">確認修改密碼</button>
-            <p class="mt-5 mb-3 text-muted">&copy; 20XX–2022</p>
+            <button onClick="check()" style="margin-top: 20pt;" class="w-100 btn btn-lg btn-primary" type="submit">確認修改密碼</button>
         </form>
+        <p class="mt-5 mb-3 text-muted">&copy; 20XX–2022</p>
+        
     </main>
-
+<?php
+if(!empty($_SESSION['userID']) && !empty($_POST['oldPass']) && !empty($_POST['newPass1']))
+{
+    require_once("dbtools.inc.php");
+    $link=create_connection();
+    
+    $sql="call update_userAccount(" . $_SESSION['userID'] . "," . $_POST['oldPass'] . "," . $_POST['newPass1'] . ")";
+    $result=execute_sql("shoppingdb", $sql, $link);
+    if($result==1)
+    {
+        echo"<script> alert(\"密碼已變更，請重新登入\"); </script>";
+    }
+    else
+    {
+        echo"<script> alert(\"舊密碼不正確\"); </script>";
+    }
+}
+?>
 
 
 </body>
-
+<script>
+    function check(){
+        if(PW1.value!="" && PW2.value!="" && OPW.value!="")
+        {
+            if(PW1.value != PW2.value)
+            {
+                alert("新密碼與再次輸入新密碼不相符");
+                event.preventDefault();
+            }
+        }
+    }
+</script>
 </html>

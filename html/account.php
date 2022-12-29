@@ -1,5 +1,20 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="zh-Hant">
+
+<?php
+if(!empty($_SESSION['userID']) && !empty($_POST['name']))
+{
+    require_once("dbtools.inc.php");
+    $link=create_connection();
+                
+    $sql="call update_userName('" . $_POST['name'] . "','" . $_SESSION['userID'] . "')";
+    $result=execute_sql("shoppingdb", $sql, $link);
+    $_SESSION['userName'] = $_POST['name'];
+    mysql_close($link);
+    echo"<script> alert(\"已更改姓名\"); </script>";
+}
+?>
 
 <head>
     <meta charset="utf-8">
@@ -15,13 +30,14 @@
     <script src="../jquery-3.6.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/tw-city-selector@2.1.1/dist/tw-city-selector.min.js"></script>
     
-    <link rel="stylesheet" type="text/css" href="/css/home.css">
+    <link rel="stylesheet" type="text/css" href="../css/home.css">
+    <link rel="stylesheet" type="text/css" href="../css/account.css">
 </head>
 
-<body>
+<body><div id="wrapper">
     <nav class="navbar navbar-dark navbar-expand-lg">
         <div class="container">
-            <a style="font-size: 20pt" class="navbar-brand" href="/html/home.html">
+            <a style="font-size: 20pt" class="navbar-brand" href="../html/home.php">
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                     class="bi bi-cart-fill" viewBox="0 0 16 16">
                     <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1
@@ -120,21 +136,34 @@
         </ul>
     </header>
 
-    <main>
+    <main style="border: 1pt solid red;">
+        
         <div style="margin-top: 30pt; border: 1pt solid red;" class="container  city-selector-set">
-            <form class="row g-3">
+            <form method="post" class="row g-3">
                 <h3>帳戶資料</h3>
+<?php
+if(!empty($_SESSION['userID']))
+{
+    require_once("dbtools.inc.php");
+    $link=create_connection();
+                
+    $sql="call select_user_account(" . $_SESSION['userID'] . ")";
+    $result=execute_sql("shoppingdb", $sql, $link);
+    $row = mysql_fetch_row($result);
+    mysql_close($link);
+}
+?>
                 <div class="col-md-4">
                   <label for="inputAddress" class="form-label">姓名</label>
-                  <input type="text" class="form-control" id="inputEmail4">
+                  <input name="name" type="text" class="form-control" id="inputEmail4" placeholder="<?php echo $row[0]; ?>">
                 </div>
                 <div class="col-md-4">
                     <label for="inputAddress" class="form-label">手機號碼</label>
-                    <input type="text" class="form-control" id="inputAddress" placeholder="09XXXXXXXX" disabled>
+                    <input name="phone" type="text" class="form-control" id="inputAddress" placeholder="<?php echo $row[1]; ?>" disabled>
                   </div>
                 <div class="col-md-6">
                   <label for="inputPassword4" class="form-label">密碼</label><br>
-                  <a href="../html/changePW.html">修改密碼</a>
+                  <a href="../html/changePW.php">修改密碼</a>
                 </div>
 
 
@@ -150,57 +179,57 @@
                 <div class="col-md-6">
                   <label for="inputZip" class="form-label">鄉鎮及門牌號碼</label>
                   <input type="text" class="form-control" id="inputZip">
-                </div>
+                </div> -->
                 <div class="col-12">
                   <button type="submit" class="btn btn-primary">儲存修改</button>
-                </div> -->
+                </div>
               </form>
         </div>
-
+    
 
     </main>
+</div>
 
-
-    <div class="container-fluid">
-        <footer class="d-flex flex-wrap justify-content-between
-                align-items-center py-3 my-4 border-top">
-            <div class="col-md-4 d-flex align-items-center">
-                <a href="/" class="mb-3 me-2 mb-md-0 text-muted
-                        text-decoration-none lh-1">
-                    <svg class="bi" width="30" height="24">
-                        <use xlink:href="#bootstrap" />
+<div id="footer" style="border: 1pt solid red;" class="container-fluid">
+    <footer class="d-flex flex-wrap justify-content-between
+            align-items-center py-3 my-4 border-top">
+        <div class="col-md-4 d-flex align-items-center">
+            <!-- <a href="/" class="mb-3 me-2 mb-md-0 text-muted
+                    text-decoration-none lh-1">
+                <svg class="bi" width="30" height="24">
+                    <use xlink:href="#bootstrap" />
+                </svg>
+            </a> -->
+            <span style="margin-left: 20pt;" class="mb-3 mb-md-0 text-muted">&copy; 2022
+                Company, Inc</span>
+        </div>
+<!-- 
+        <ul class="nav col-md-4 justify-content-end
+                    list-unstyled d-flex">
+            <li class="ms-3">
+                <a class="text-muted" href="#">
+                    <svg class="bi" width="24" height="24">
+                        <use xlink:href="#twitter"></use>
                     </svg>
                 </a>
-                <span class="mb-3 mb-md-0 text-muted">&copy; 2022
-                    Company, Inc</span>
-            </div>
-
-            <ul class="nav col-md-4 justify-content-end
-                        list-unstyled d-flex">
-                <li class="ms-3">
-                    <a class="text-muted" href="#">
-                        <svg class="bi" width="24" height="24">
-                            <use xlink:href="#twitter"></use>
-                        </svg>
-                    </a>
-                </li>
-                <li class="ms-3">
-                    <a class="text-muted" href="#">
-                        <svg class="bi" width="24" height="24">
-                            <use xlink:href="#instagram"></use>
-                        </svg>
-                    </a>
-                </li>
-                <li class="ms-3">
-                    <a class="text-muted" href="#">
-                        <svg class="bi" width="24" height="24">
-                            <use xlink:href="#facebook"></use>
-                        </svg>
-                    </a>
-                </li>
-            </ul>
-        </footer>
-    </div>
+            </li>
+            <li class="ms-3">
+                <a class="text-muted" href="#">
+                    <svg class="bi" width="24" height="24">
+                        <use xlink:href="#instagram"></use>
+                    </svg>
+                </a>
+            </li>
+            <li class="ms-3">
+                <a class="text-muted" href="#">
+                    <svg class="bi" width="24" height="24">
+                        <use xlink:href="#facebook"></use>
+                    </svg>
+                </a>
+            </li>
+        </ul> -->
+    </footer>
+</div>
 </body>
 <script>
     // new TwCitySelector({

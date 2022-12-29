@@ -130,15 +130,10 @@ if(!empty($_POST["del"]) && !empty($_POST["pID"])){
 }
 else if(!empty($_POST["send_out"]))
 {
-    //echo $_POST["pID"][1];
     require_once("dbtools.inc.php");
 	$link=create_connection();
     $sql="call insert_orders('" . $_SESSION['userID'] . "','" . $_POST["pName"] . "','" . $_POST["pPhone"] . "','" . $_POST["county"] . "','" . $_POST["district"] . "','" . $_POST["house_number"] . "')";
-    //$sql="call insert_orders()";
-    //$result=execute_sql("shoppingdb", $sql, $link);
     $result=execute_sql("shoppingdb", $sql, $link);
-    //echo $sql;
-    //echo $result;
     $row = mysql_fetch_row($result);
     
     mysql_close($link);
