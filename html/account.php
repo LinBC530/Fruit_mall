@@ -41,20 +41,20 @@ if(!empty($_SESSION['userID']) && !empty($_POST['name']))
 </head>
 
 <body><div id="wrapper">
-    <nav class="navbar navbar-dark navbar-expand-lg">
+    <nav class="navbar navbar-dark navbar-expand-lg sticky-top">
         <div class="container">
             <a style="font-size: 20pt" class="navbar-brand" href="../html/home.php">
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                     class="bi bi-cart-fill" viewBox="0 0 16 16">
                     <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1
-                        .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5
-                        0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61
-                        2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0
-                        0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1
-                        0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1
-                        0-2z"></path>
+                            .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5
+                            0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61
+                            2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0
+                            0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1
+                            0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1
+                            0-2z"></path>
                 </svg>
-                購物商城
+                水果商城
             </a>
             <button style="margin-bottom: auto;" class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -63,43 +63,78 @@ if(!empty($_SESSION['userID']) && !empty($_POST['name']))
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-                <form style="width:450px" class="input-group mx-auto" id="Search" role="search">
-                    <input class="form-control me-2" type="search" placeholder="搜尋">
+                <form style="width:450px" class="input-group mx-auto" id="Search" role="search" method="get" action="Inquire.php">
+                    <input name="search" class="form-control me-2" type="search" placeholder="搜尋">
                     <button class="btn btn-success" type="submit">搜尋</button>
                 </form>
 
                 <ul class="navbar-nav align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/html/home.html">最近看過</a>
+                        <a class="nav-link active" aria-current="page" href="../html/shopping_cart.php">
+                            購物車
+<?php
+                        if(!empty($_SESSION['userID']))
+                        {
+                            //查詢用戶購物車資料筆數
+                            require_once("dbtools.inc.php");
+                            $link=create_connection();
+                            $sql="call select_shappingCarNum(" . $_SESSION['userID'] . ")";
+                            $result=execute_sql("shoppingdb", $sql, $link);
+                            $car_num = mysql_fetch_row($result)[0];
+                            
+                            //顯示用戶購物車資料筆數
+                            if($car_num > 0)
+                                echo "<span class=\"badge bg-danger\">$car_num</span>";
+                            else
+                                echo "<span class=\"badge bg-secondary\">0</span>";
+                            
+                            //關閉資料庫連線
+                            mysql_close($link);
+                        }
+                        else
+                            echo "<span class=\"badge bg-secondary\">0</span>";
+?>
+                            <!-- </span> -->
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/html/home.html">購物車 <span
-                                class="badge bg-secondary">0</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">我的訂單</a>
+                        <a class="nav-link active" href="../html/order.php">我的訂單</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            顧客中心
-                        </a>
-                        <ul style="line-height: 30px;" class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">追蹤清單</a></li>
-                            <li><a class="dropdown-item" href="#">訂單</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">帳號設定</a></li>
-                        </ul>
-
+                        <a class="nav-link active" href="../html/account.php">帳號設定</a>
                     </li>
-                    <!-- <li class="nav-item">
-                        <a class="nav-link active" href="#">button</a>
-                    </li> -->
+<?php 
+                    if(!empty($_SESSION['userName']) && !empty($_SESSION['userID']))
+                    {
+                        //顯示用戶名稱
+                        echo
+                        "<li style=\"width: 80pt;overflow: hidden;text-overflow: ellipsis;white-space:nowrap;\" class=\"nav-item\">
+                            <a class=\"nav-link disabled\">HI!" . $_SESSION['userName'] . "</a>
+                        </li>";
+                    }
+?>
                     <li class="nav-item">
-                        <a class="nav-link" href="/html/login.html"><button type="button"
-                                class="btn btn-success">登入</button></a>
+<?php
+                    //判定顯示登入登出按鈕
+                    if(!empty($_SESSION['userName']) && !empty($_SESSION['userID']))
+                    {
+                        echo "
+                        <form method=\"post\">
+                            <button name=\"distory\" value=\"distory\" type=\"submit\" class=\"btn btn-success\">登出</button>
+                            
+                        </from>";
+
+                        if(!empty($_POST['distory'])) {
+                            session_destroy();
+                            echo "<script> location.replace(\"home.php\"); </script>";
+                        }
+                    }
+                    else
+                    {
+                        echo "<a class=\"nav-link\" href=\"../html/login.php\"><button type=\"button\"
+                                class=\"btn btn-success\">登入</button></a>";
+                    }
+?>
                     </li>
                 </ul>
 
@@ -110,43 +145,33 @@ if(!empty($_SESSION['userID']) && !empty($_POST['name']))
     <header>
         <ul class="nav justify-content-center">
             <li class="nav-item">
-                <a class="nav-link" href="#">3C</a>
+                <a class="nav-link" href="../html/Inquire.php?search=melon">瓜果類</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">美妝</a>
+                <a class="nav-link" href="../html/Inquire.php?search=drupe">核果類</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">日常</a>
+                <a class="nav-link" href="../html/Inquire.php?search=pome_fruit">仁果類</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">食品</a>
+                <a class="nav-link" href="../html/Inquire.php?search=tangerine">柑橘類</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">生活</a>
+                <a class="nav-link" href="../html/Inquire.php?search=berry">漿果類</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">戶外</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
+                <a class="nav-link" href="../html/Inquire.php?search=other">其他類</a>
             </li>
         </ul>
     </header>
 
-    <main style="border: 1pt solid red;">
+    <main>
         
-        <div style="margin-top: 30pt; border: 1pt solid red;" class="container  city-selector-set">
-            <form method="post" class="row g-3">
-                <h3>帳戶資料</h3>
+        <div style="margin-top: 30pt;" class="container  city-selector-set">
+            <form method="post">
+                <div class="row justify-content-md-center">
+                    <div class="col-md-10">
+                        <h3>帳戶資料</h3>
 <?php
 if(!empty($_SESSION['userID']))
 {
@@ -159,37 +184,26 @@ if(!empty($_SESSION['userID']))
     mysql_close($link);
 }
 ?>
-                <div class="col-md-4">
-                  <label for="inputAddress" class="form-label">姓名</label>
-                  <input name="name" type="text" class="form-control" id="inputEmail4" placeholder="<?php echo $row[0]; ?>">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label for="inputAddress" class="form-label">姓名</label>
+                                <input name="name" type="text" class="form-control" id="inputEmail4" placeholder="<?php echo $row[0]; ?>" maxlength="10">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="inputAddress" class="form-label">手機號碼</label>
+                                <input name="phone" type="text" class="form-control" id="inputAddress" placeholder="<?php echo $row[1]; ?>" disabled>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="inputPassword4" class="form-label">密碼</label><br>
+                                <a href="../html/changePW.php">修改密碼</a>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary">儲存修改</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <label for="inputAddress" class="form-label">手機號碼</label>
-                    <input name="phone" type="text" class="form-control" id="inputAddress" placeholder="<?php echo $row[1]; ?>" disabled>
-                  </div>
-                <div class="col-md-6">
-                  <label for="inputPassword4" class="form-label">密碼</label><br>
-                  <a href="../html/changePW.php">修改密碼</a>
-                </div>
-
-
-                <!-- <h3 style="margin-top: 50pt;">發票寄送地址</h3>
-                <div class="col-md-3">
-                  <label for="inputCity" class="form-label">縣市</label>
-                  <select class="county form-select"></select>
-                </div>
-                <div class="col-md-3">
-                  <label for="inputState" class="form-label">區域</label>
-                  <select class="district form-select"></select>
-                </div>
-                <div class="col-md-6">
-                  <label for="inputZip" class="form-label">鄉鎮及門牌號碼</label>
-                  <input type="text" class="form-control" id="inputZip">
-                </div> -->
-                <div class="col-12">
-                  <button type="submit" class="btn btn-primary">儲存修改</button>
-                </div>
-              </form>
+            </form>
         </div>
     
 

@@ -44,15 +44,15 @@ if (empty($_SESSION["userID"]))
             </h1>
         <form method="post">
             <div class="form-floating">
-                <input name="oldPass" type="password" class="form-control" id="OPW" placeholder="Password" required>
+                <input name="oldPass" type="password" class="form-control" id="OPW" placeholder="Password" maxlength="10" required>
                 <label for="floatingPassword">舊密碼</label>
             </div>
             <div class="form-floating">
-                <input name="newPass1" type="password" class="form-control" id="PW1" placeholder="Password" required>
+                <input name="newPass1" type="password" class="form-control" id="PW1" placeholder="Password" maxlength="10" required>
                 <label for="floatingPassword">新密碼</label>
             </div>
             <div class="form-floating">
-                <input name="newPass2" type="password" class="form-control" id="PW2" placeholder="Password" required>
+                <input name="newPass2" type="password" class="form-control" id="PW2" placeholder="Password" maxlength="10" required>
                 <label for="floatingPassword">再次輸入新密碼</label>
             </div>
             <button onClick="check()" style="margin-top: 20pt;" class="w-100 btn btn-lg btn-primary" type="submit">確認修改密碼</button>
@@ -70,7 +70,9 @@ if(!empty($_SESSION['userID']) && !empty($_POST['oldPass']) && !empty($_POST['ne
     $result=execute_sql("shoppingdb", $sql, $link);
     if($result==1)
     {
+        session_destroy();
         echo"<script> alert(\"密碼已變更，請重新登入\"); </script>";
+        echo "<meta http-equiv=\"refresh\" content=\"0;url=../html/login.php\">";
     }
     else
     {
