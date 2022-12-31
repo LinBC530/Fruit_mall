@@ -13,7 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
-    <link rel="stylesheet" type="text/css" href="../css/home.css">
+    <link rel="stylesheet" type="text/css" href="../css/all_Web.css">
     <link rel="stylesheet" type="text/css" href="../css/Inquire.css">
 </head>
 
@@ -35,6 +35,7 @@
 
 
 <body>
+<div id="wrapper">
 <nav class="navbar navbar-dark navbar-expand-lg sticky-top">
         <div class="container">
             <a style="font-size: 20pt" class="navbar-brand" href="../html/home.php">
@@ -247,7 +248,7 @@
         <div id=\"commodity\"
             <div style=\"padding: 3pt;\" class=\"row
                     justify-content-md-center\">
-                <div style=\"border: 1pt solid red;\" class=\"col\">
+                <div style=\"border: 2pt solid black;background-color: rgb(255, 255, 255);\" class=\"col\">
                     <h1 style=\"text-align: center;\">";
                     if(!empty($_POST["search"]) || !empty($_GET["search"]))
                         echo "查無商品";
@@ -262,6 +263,17 @@
         </div>
     </main>";
 ?>
+</div>
+
+    <div id="footer" class="container-fluid">
+        <footer class="d-flex flex-wrap justify-content-between
+                align-items-center py-3 my-4 border-top">
+            <div class="col-md-4 d-flex align-items-center">
+                <span style="margin-left: 20pt;" class="mb-3 mb-md-0 text-muted">&copy; 2022
+                    Company, Inc</span>
+            </div>
+        </footer>
+    </div>
 </body>
 
 </html>

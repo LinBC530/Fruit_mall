@@ -195,10 +195,10 @@
                 }
 
                 //顯示熱銷商品
-                echo "<div style=\"border: 1pt solid red;\" class=\"col-md-4\">
+                echo "<div class=\"col-md-4\">
                     <img style=\"width: 300px;\" src=\"" . $row[0] . "\" class=\"rounded mx-auto d-block\" alt=\"...\">
                     </div>
-                    <div style=\"border: 1pt solid red;\" class=\"col-md-5\">
+                    <div class=\"col-md-5\">
                     <h1 style=\"word-wrap:break-word\">" . $row[1] . "</h1>
                     <br>
                     <p style=\"word-wrap:break-word;\" class=\"col-md\">
@@ -209,7 +209,7 @@
                     <form method=\"post\" action=\"\">
                     <div class=\"row\">
                     
-                        <div style=\"border: 1pt solid red;\" class=\"col-auto\">
+                        <div class=\"col-auto\">
                             <select name=\"pNum\" class=\"form-select\" aria-label=\"Default select example\">";
                             
                                 for($v=1;$v<=$q_num;$v++)
@@ -236,13 +236,4 @@
             
         </div>
 </body>
-<!-- <script>
-    $('#Add').click(function() {
-        var q_num = <?=$row[4]?>;
-        if(q_num <= 0)
-        {
-            alert("");
-        }
-    });
-</script> -->
 </html>

@@ -30,7 +30,7 @@
                             0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1
                             0-2z"></path>
                 </svg>
-                購物商城
+                水果商城
             </a>
             <h1 style="margin-top: 10pt;" class="h3 mb-3 fw-normal">
                 <ul class="nav justify-content-center">

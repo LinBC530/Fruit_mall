@@ -1,0 +1,47 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body
+{
+    background-color: rgb(242, 242, 242);
+}
+
+nav
+{
+    font-size: 13pt;
+    background-color: rgb(43, 78, 255);
+}
+
+header
+{
+    background-color: rgb(255, 255, 255);
+    
+}
+
+.nav-link
+{
+    color: rgb(0, 0, 0);
+}
+
+#Search
+{
+    height: 45px;
+}
+
+#wrapper {
+    min-height: calc(100% - 130px); /*減去footer高度*/
+}
+
+#footer {
+    margin-top: 30px;
+    height: 100px; /*設定footer本身高度*/
+    border: 1pt solid rgb(60, 60, 60);
+    background-color: rgb(60, 60, 60);
+}
+
+/* main
+{
+    border: 1pt solid red;
+} */

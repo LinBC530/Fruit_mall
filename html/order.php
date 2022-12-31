@@ -20,8 +20,8 @@ if (empty($_SESSION["userID"]))
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" type="text/css" href="../css/home.css">
-    <link rel="stylesheet" type="text/css" href="../css/order.css">
+    <link rel="stylesheet" type="text/css" href="../css/all_Web.css">
+    <!-- <link rel="stylesheet" type="text/css" href="../css/order.css"> -->
 </head>
 
 <body>
@@ -280,7 +280,7 @@ if(!empty($_SESSION['userID']))
     if($order_num == 0)
     {
         echo"
-        <div style=\"font-size: 30pt;text-align: center;\">無訂單</div>
+        <div style=\"font-size: 30pt;text-align: center;border: 1pt solid black;background-color: rgb(255, 255, 255);\">無訂單</div>
         ";
     }
 }
@@ -296,44 +296,13 @@ else
     </div>
 
 
-    <div id="footer" style="border: 1pt solid red;" class="container-fluid">
+    <div id="footer" class="container-fluid">
         <footer class="d-flex flex-wrap justify-content-between
                 align-items-center py-3 my-4 border-top">
             <div class="col-md-4 d-flex align-items-center">
-                <!-- <a href="/" class="mb-3 me-2 mb-md-0 text-muted
-                        text-decoration-none lh-1">
-                    <svg class="bi" width="30" height="24">
-                        <use xlink:href="#bootstrap" />
-                    </svg>
-                </a> -->
                 <span style="margin-left: 20pt;" class="mb-3 mb-md-0 text-muted">&copy; 2022
                     Company, Inc</span>
             </div>
-<!-- 
-            <ul class="nav col-md-4 justify-content-end
-                        list-unstyled d-flex">
-                <li class="ms-3">
-                    <a class="text-muted" href="#">
-                        <svg class="bi" width="24" height="24">
-                            <use xlink:href="#twitter"></use>
-                        </svg>
-                    </a>
-                </li>
-                <li class="ms-3">
-                    <a class="text-muted" href="#">
-                        <svg class="bi" width="24" height="24">
-                            <use xlink:href="#instagram"></use>
-                        </svg>
-                    </a>
-                </li>
-                <li class="ms-3">
-                    <a class="text-muted" href="#">
-                        <svg class="bi" width="24" height="24">
-                            <use xlink:href="#facebook"></use>
-                        </svg>
-                    </a>
-                </li>
-            </ul> -->
         </footer>
     </div>
 </body>

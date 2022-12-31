@@ -15,9 +15,11 @@
         crossorigin="anonymous"></script>
 
     <link rel="stylesheet" type="text/css" href="../css/home.css">
+    <link rel="stylesheet" type="text/css" href="../css/all_Web.css">
 </head>
 
 <body>
+    <div id="wrapper">
     <nav class="navbar navbar-dark navbar-expand-lg sticky-top">
         <div class="container">
             <a style="font-size: 20pt" class="navbar-brand" href="../html/home.php">
@@ -143,7 +145,7 @@
 
     <main>
         <div class="container">
-            <div style="border: 1pt solid red;" class="col-md-auto">
+            <div class="col-md-auto">
                 <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-indicators">
                         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
@@ -224,45 +226,15 @@
             </div>
         </div>
     </main>
+    </div>
 
-    <div class="container-fluid">
+    <div id="footer" class="container-fluid">
         <footer class="d-flex flex-wrap justify-content-between
                 align-items-center py-3 my-4 border-top">
             <div class="col-md-4 d-flex align-items-center">
-                <a href="/" class="mb-3 me-2 mb-md-0 text-muted
-                        text-decoration-none lh-1">
-                    <svg class="bi" width="30" height="24">
-                        <use xlink:href="#bootstrap" />
-                    </svg>
-                </a>
-                <span class="mb-3 mb-md-0 text-muted">&copy; 2022
+                <span style="margin-left: 20pt;" class="mb-3 mb-md-0 text-muted">&copy; 2022
                     Company, Inc</span>
             </div>
-
-            <ul class="nav col-md-4 justify-content-end
-                        list-unstyled d-flex">
-                <li class="ms-3">
-                    <a class="text-muted" href="#">
-                        <svg class="bi" width="24" height="24">
-                            <use xlink:href="#twitter"></use>
-                        </svg>
-                    </a>
-                </li>
-                <li class="ms-3">
-                    <a class="text-muted" href="#">
-                        <svg class="bi" width="24" height="24">
-                            <use xlink:href="#instagram"></use>
-                        </svg>
-                    </a>
-                </li>
-                <li class="ms-3">
-                    <a class="text-muted" href="#">
-                        <svg class="bi" width="24" height="24">
-                            <use xlink:href="#facebook"></use>
-                        </svg>
-                    </a>
-                </li>
-            </ul>
         </footer>
     </div>
 </body>
