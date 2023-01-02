@@ -127,8 +127,8 @@
                     <label for=\"floatingInput\">姓名</label>
                 </div>
                 <div class=\"form-floating\">
-                    <input name=\"rPhone\" type=\"tel\" class=\"form-control\" id=\"phoneNB\" placeholder=\"text\" maxlength=\"10\" required=\"\d+\">
-                    <label for=\"floatingInput\">電話</label>
+                    <input name=\"rPhone\" type=\"tel\" class=\"form-control\" id=\"phoneNB\" placeholder=\"text\" maxlength=\"10\" required pattern=\"09\d{8}\" title=\"請輸入手機號碼 EX:09XXXXXXXX\">
+                    <label for=\"floatingInput\">手機號碼</label>
                 </div>
                 <div class=\"form-floating\">
                     <input name=\"rPass1\" type=\"password\" class=\"form-control\" id=\"PW1\" placeholder=\"Password\" maxlength=\"10\" required>
@@ -160,8 +160,8 @@
             {
                 echo"
                 <div class=\"form-floating\">
-                    <input name=\"lPhone\" type=\"tel\" class=\"form-control\" id=\"Phone\" placeholder=\"text\" maxlength=\"10\" required>
-                    <label for=\"floatingInput\">帳號</label>
+                    <input name=\"lPhone\" type=\"tel\" class=\"form-control\" id=\"Phone\" placeholder=\"text\" maxlength=\"10\" required pattern=\"09\d{8}\" title=\"請輸入手機號碼 EX:09XXXXXXXX\">
+                    <label for=\"floatingInput\">手機號碼</label>
                 </div>
                 <div class=\"form-floating\">
                     <input name=\"lPass\" type=\"password\" class=\"form-control\" id=\"PW1\" placeholder=\"Password\" maxlength=\"10\" required=\"\d+\">

@@ -14,7 +14,7 @@
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" type="text/css" href="../css/home.css">
+    <link rel="stylesheet" type="text/css" href="../css/all_Web.css">
 </head>
 
 <?php
@@ -41,6 +41,7 @@
             ?>
 
 <body>
+<div id="wrapper">
     <nav class="navbar navbar-dark navbar-expand-lg sticky-top">
         <div class="container">
             <a style="font-size: 20pt" class="navbar-brand" href="../html/home.php">
@@ -235,5 +236,17 @@
             ?>
             
         </div>
+    </div>
+</div>
+
+        <div id="footer" class="container-fluid">
+        <footer class="d-flex flex-wrap justify-content-between
+                align-items-center py-3 my-4 border-top">
+            <div class="col-md-4 d-flex align-items-center">
+                <span style="margin-left: 20pt;" class="mb-3 mb-md-0 text-muted">&copy; 2022
+                    Company, Inc</span>
+            </div>
+        </footer>
+    </div>
 </body>
 </html>

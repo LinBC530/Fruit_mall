@@ -296,11 +296,11 @@ else if(!empty($_POST["send_out"]))
             <div class="row g-3 city-selector-set">
                 <div class="col-md-6">
                   <label for="inputEmail4" class="form-label">姓名</label>
-                  <input name="pName" type="text" class="form-control" id="inputName">
+                  <input name="pName" type="text" class="form-control" id="inputName" maxlength="10">
                 </div>
                 <div class="col-md-6">
                   <label for="inputPassword4" class="form-label">連絡電話</label>
-                  <input name="pPhone" type="text" class="form-control" id="inputPhone">
+                  <input name="pPhone" type="text" class="form-control" id="inputPhone" maxlength="10" pattern="09\d{8}" title="請輸入手機號碼 EX:09XXXXXXXX">
                 </div>
                 <div class="col-md-3">
                   <label for="inputCity" class="form-label">縣市</label>
@@ -313,7 +313,7 @@ else if(!empty($_POST["send_out"]))
                 </div>
                 <div class="col-md-6">
                   <label for="inputZip" class="form-label">鄉鎮及門牌號</label>
-                  <input name="house_number" type="text" class="form-control" id="inputHouseNumber">
+                  <input name="house_number" type="text" class="form-control" id="inputHouseNumber" maxlength="20">
                 </div>
             </div>
             
